@@ -20,7 +20,15 @@ app.use(express.json());
 app.use(cors());
 
 
-app.post('/tabla', (req, res) => {
+app.post('/tabla-details', (req, res) => {
+  const tabla = req.body;
+  console.log('Datos de la tabla recibidos:', tabla);
+
+  
+  res.send('Datos de la tabla recibidos correctamente');
+});
+
+app.post('/tabla-warning', (req, res) => {
   const tabla = req.body;
   console.log('Datos de la tabla recibidos:', tabla);
 

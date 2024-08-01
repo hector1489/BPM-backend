@@ -1,9 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const { Pool } = require('pg');
 
 const app = express();
 const port = 3000;
 
+const pool = new Pool({
+  user: 'user',
+  host: 'localhost',
+  database: 'db',
+  password: 'pass',
+  port: 5432,
+});
 
 app.use(bodyParser.json());
 

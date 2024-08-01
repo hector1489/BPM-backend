@@ -2,9 +2,10 @@ CREATE DATABASE  BPM;
 
 \c BPM
 
-CREATE TABLE user (
+CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    username VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     direction VARCHAR(200) NOT NULL,
     email VARCHAR(100) NOT NULL,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -81,6 +82,13 @@ CREATE TABLE deviations (
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id)
 );
+
+
+
+
+
+
+
 
 
 

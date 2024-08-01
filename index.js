@@ -1,19 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
+const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 const pool = new Pool({
-  user: 'user',
-  host: 'localhost',
-  database: 'db',
-  password: 'pass',
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASSWORD,
+  port: parseInt(process.env.DB_PORT ?? '5432', 10),
+  allowExitOnIdle: true,
 });
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(cors());
 
 
 app.post('/tabla', (req, res) => {
@@ -24,7 +28,7 @@ app.post('/tabla', (req, res) => {
   res.send('Datos de la tabla recibidos correctamente');
 });
 
-// Iniciar el servidor
+
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
 });

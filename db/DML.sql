@@ -1,6 +1,6 @@
 INSERT INTO user ()
 VALUES
-    (),
+    (DEFAULT, 'usuario1@example.com', 'contrasena1', 'Usuario uno'),
     ();
 
 
@@ -15,7 +15,7 @@ VALUES
     ();
 
 
-INSERT INTO details (items, question, nota, observacion promedios, fecha)
+INSERT INTO details (DEFAULT, items, question, nota, observacion promedios, fecha)
 VALUES
     (),
     ();

@@ -1,47 +1,31 @@
 const express = require('express');
-const { Pool } = require('pg');
 const cors = require('cors');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
+
+const { verifyToken } = require('./middleware/event.middleware');
+const {
+  findUsuarios,
+  findUsuarioByEmail,
+  createUsuario,
+  updateUsuario,
+  deleteUsuario
+} = require('./models/event.dao');
+const { verifyCredentials } = require('./models/user.dao');
+const { jwtSign } = require('./utils/jwt');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
-  password: process.env.DB_PASSWORD,
-  port: parseInt(process.env.DB_PORT ?? '5432', 10),
-  allowExitOnIdle: true,
-});
-
 app.use(express.json());
 app.use(cors());
 
-const secretKey = process.env.JWT_SECRET || 'your_secret_key';
-
-// Middleware de Autenticación
-const authenticateToken = (req, res, next) => {
-  const token = req.headers['authorization'];
-  if (!token) return res.sendStatus(401);
-
-  jwt.verify(token, secretKey, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
-  });
-};
-
 // Ruta de registro
 app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password, rol} = req.body;
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const result = await pool.query('INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id', [username, hashedPassword]);
-    res.status(201).json({ userId: result.rows[0].id });
+    const newUser = await createUsuario({ email, password, rol});
+    res.status(201).json(newUser);
   } catch (error) {
     console.error('Error registrando usuario:', error);
     res.status(500).json({ error: 'Error registrando usuario' });
@@ -50,22 +34,15 @@ app.post('/register', async (req, res) => {
 
 // Ruta de login
 app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
-    if (result.rows.length === 0) {
-      return res.status(401).json({ error: 'Usuario no encontrado' });
+    const user = await verifyCredentials(email, password);
+    if (user.length === 0) {
+      return res.status(401).json({ error: 'Credenciales incorrectas' });
     }
 
-    const user = result.rows[0];
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Contraseña incorrecta' });
-    }
-
-    const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: '1h' });
+    const token = jwtSign({ userId: user[0].id });
     res.json({ token });
   } catch (error) {
     console.error('Error en login:', error);
@@ -73,14 +50,14 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.post('/tabla-details', authenticateToken, (req, res) => {
+app.post('/tabla-details', verifyToken, (req, res) => {
   const tabla = req.body;
   console.log('Datos de la tabla recibidos:', tabla);
 
   res.send('Datos de la tabla recibidos correctamente');
 });
 
-app.post('/tabla-warning', authenticateToken, (req, res) => {
+app.post('/tabla-warning', verifyToken, (req, res) => {
   const tabla = req.body;
   console.log('Datos de la tabla recibidos:', tabla);
 

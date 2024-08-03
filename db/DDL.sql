@@ -1,6 +1,6 @@
-CREATE DATABASE  BPM;
+CREATE DATABASE bpm;
 
-\c BPM
+\c bpm
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -11,6 +11,7 @@ CREATE TABLE users (
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+/*
 CREATE TABLE forms (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES user(id),
@@ -83,7 +84,7 @@ CREATE TABLE deviations (
     PRIMARY KEY(id)
 );
 
-
+*/
 
 
 

@@ -1,9 +1,9 @@
-INSERT INTO user ()
+INSERT INTO users (username, password, direction, email)
 VALUES
-    (DEFAULT, 'usuario1@example.com', 'contrasena1', 'Usuario uno'),
-    ();
+    ('usuario1', 'hashedpassword1', 'Direccion 1', 'usuario1@example.com'),
+    ('usuario2', 'hashedpassword2', 'Direccion 2', 'usuario2@example.com');
 
-
+/*
 INSERT INTO modules (form_id, name, module)
 VALUES
     (),
@@ -27,7 +27,7 @@ VALUES
     (),
     ();
 
-
+*/
 
 
 

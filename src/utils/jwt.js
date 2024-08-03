@@ -1,12 +1,19 @@
-require('dotenv').config();
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-const KEY = process.env.JWT_SECRET_KEY;
+const KEY = process.env.JWT_SECRET;
 
-const jwtVerify = (token) => jwt.verify(token, KEY, (err, decoded) => {
-  if (err) throw err;
-  return decoded;
-});
+if (!KEY) {
+  throw new Error('JWT_SECRET is not defined');
+}
+
+const jwtVerify = (token) => {
+  try {
+    return jwt.verify(token, KEY);
+  } catch (err) {
+    throw err;
+  }
+};
 
 const jwtSign = (payload) => jwt.sign(payload, KEY, { expiresIn: 60 * 5 }); // 5 minutos
 

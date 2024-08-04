@@ -2,16 +2,20 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-const  verifyToken  = require('./middleware/event.middleware');
+const verifyToken = require('./middleware/event.middleware');
 const { createUsuario, findUsuarios, findUsuarioByEmail, updateUsuario, deleteUsuario } = require('./models/Events.dao');
 const { verifyCredentials } = require('./models/Users.dao');
-const jwtSign = require('../utils/jwt');
+const { jwtSign } = require('../utils/jwt');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
+
+// Simulando una base de datos en memoria
+const tablaDetailsData = [];
+const tablaWarningData = [];
 
 // Ruta de registro
 app.post('/register', async (req, res) => {
@@ -47,15 +51,23 @@ app.post('/login', async (req, res) => {
 app.post('/tabla-details', verifyToken, (req, res) => {
   const tabla = req.body;
   console.log('Datos de la tabla recibidos:', tabla);
-
+  tablaDetailsData.push(tabla);
   res.send('Datos de la tabla recibidos correctamente');
+});
+
+app.get('/tabla-details', verifyToken, (req, res) => {
+  res.json(tablaDetailsData);
 });
 
 app.post('/tabla-warning', verifyToken, (req, res) => {
   const tabla = req.body;
   console.log('Datos de la tabla recibidos:', tabla);
-
+  tablaWarningData.push(tabla);
   res.send('Datos de la tabla recibidos correctamente');
+});
+
+app.get('/tabla-warning', verifyToken, (req, res) => {
+  res.json(tablaWarningData);
 });
 
 // Evitar que el servidor se inicie durante las pruebas

@@ -1,8 +1,8 @@
 const db = require('../database/db');
 
 const createTablaDetail = async (data) => {
-    const query = 'INSERT INTO tabla_details (field1, field2) VALUES ($1, $2) RETURNING *;';
-    const values = [data.field1, data.field2];
+    const query = 'INSERT INTO tabla_details (field1, field2, field3, field4) VALUES ($1, $2, $3, $4) RETURNING *;';
+    const values = [data.field1, data.field2, data.field3, data.field4];
     return await db(query, values);
 };
 

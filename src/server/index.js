@@ -1,14 +1,15 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
+const path = require('path');
+const fs = require('fs');
 
 const verifyToken = require('./middleware/event.middleware');
 const { createUsuario, findUsuarios, findUsuarioByEmail, updateUsuario, deleteUsuario } = require('./models/Events.dao');
 const { verifyCredentials } = require('./models/Users.dao');
 const { jwtSign } = require('../utils/jwt');
-const { createTablaDetail, getAllTablaDetails } = require('./models/TablaDetails.dao');
-const { createTablaWarning, getAllTablaWarnings } = require('./models/TablaWarning.dao');
-
+const { createTablaDetail, getAllTablaDetails } = require('./models/TableDetails.dao');
+const { createTablaWarning, getAllTablaWarnings } = require('./models/TableWarning.dao');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -54,8 +55,12 @@ app.post('/login', async (req, res) => {
 // Rutas para tabla-details
 app.post('/tabla-details', verifyToken, async (req, res) => {
   const tabla = req.body;
-  console.log('Datos de la tabla recibidos:', tabla);
-  
+
+  // Validar datos de entrada
+  if (!tabla || typeof tabla !== 'object') {
+    return res.status(400).json({ error: 'Datos inválidos' });
+  }
+
   try {
     const newTablaDetail = await createTablaDetail(tabla);
     res.status(201).json(newTablaDetail);
@@ -78,8 +83,12 @@ app.get('/tabla-details', verifyToken, async (req, res) => {
 // Rutas para tabla-warning
 app.post('/tabla-warning', verifyToken, async (req, res) => {
   const tabla = req.body;
-  console.log('Datos de la tabla recibidos:', tabla);
-  
+
+  // Validar datos de entrada
+  if (!tabla || typeof tabla !== 'object') {
+    return res.status(400).json({ error: 'Datos inválidos' });
+  }
+
   try {
     const newTablaWarning = await createTablaWarning(tabla);
     res.status(201).json(newTablaWarning);
@@ -97,6 +106,25 @@ app.get('/tabla-warning', verifyToken, async (req, res) => {
     console.error('Error obteniendo tabla warnings:', error);
     res.status(500).json({ error: 'Error obteniendo tabla warnings' });
   }
+});
+
+// Ruta para obtener todos los datos de accionCorrectivas.json
+const accionCorrectivasFilePath = path.join(__dirname, 'data', 'accionCorrectivas.json');
+
+app.get('/accion-correctivas', async (req, res) => {
+  try {
+    const data = fs.readFileSync(accionCorrectivasFilePath, 'utf8');
+    res.status(200).json(JSON.parse(data));
+  } catch (error) {
+    console.error('Error obteniendo datos de accion correctivas:', error);
+    res.status(500).json({ error: 'Error obteniendo datos de accion correctivas' });
+  }
+});
+
+// Middleware para manejo de errores
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Algo salió mal' });
 });
 
 // Evitar que el servidor se inicie durante las pruebas

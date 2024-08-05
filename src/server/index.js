@@ -6,6 +6,9 @@ const verifyToken = require('./middleware/event.middleware');
 const { createUsuario, findUsuarios, findUsuarioByEmail, updateUsuario, deleteUsuario } = require('./models/Events.dao');
 const { verifyCredentials } = require('./models/Users.dao');
 const { jwtSign } = require('../utils/jwt');
+const { createTablaDetail, getAllTablaDetails } = require('./models/TablaDetails.dao');
+const { createTablaWarning, getAllTablaWarnings } = require('./models/TablaWarning.dao');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -48,26 +51,52 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.post('/tabla-details', verifyToken, (req, res) => {
+// Rutas para tabla-details
+app.post('/tabla-details', verifyToken, async (req, res) => {
   const tabla = req.body;
   console.log('Datos de la tabla recibidos:', tabla);
-  tablaDetailsData.push(tabla);
-  res.send('Datos de la tabla recibidos correctamente');
+  
+  try {
+    const newTablaDetail = await createTablaDetail(tabla);
+    res.status(201).json(newTablaDetail);
+  } catch (error) {
+    console.error('Error guardando tabla detail:', error);
+    res.status(500).json({ error: 'Error guardando tabla detail' });
+  }
 });
 
-app.get('/tabla-details', verifyToken, (req, res) => {
-  res.json(tablaDetailsData);
+app.get('/tabla-details', verifyToken, async (req, res) => {
+  try {
+    const tablaDetails = await getAllTablaDetails();
+    res.status(200).json(tablaDetails);
+  } catch (error) {
+    console.error('Error obteniendo tabla details:', error);
+    res.status(500).json({ error: 'Error obteniendo tabla details' });
+  }
 });
 
-app.post('/tabla-warning', verifyToken, (req, res) => {
+// Rutas para tabla-warning
+app.post('/tabla-warning', verifyToken, async (req, res) => {
   const tabla = req.body;
   console.log('Datos de la tabla recibidos:', tabla);
-  tablaWarningData.push(tabla);
-  res.send('Datos de la tabla recibidos correctamente');
+  
+  try {
+    const newTablaWarning = await createTablaWarning(tabla);
+    res.status(201).json(newTablaWarning);
+  } catch (error) {
+    console.error('Error guardando tabla warning:', error);
+    res.status(500).json({ error: 'Error guardando tabla warning' });
+  }
 });
 
-app.get('/tabla-warning', verifyToken, (req, res) => {
-  res.json(tablaWarningData);
+app.get('/tabla-warning', verifyToken, async (req, res) => {
+  try {
+    const tablaWarnings = await getAllTablaWarnings();
+    res.status(200).json(tablaWarnings);
+  } catch (error) {
+    console.error('Error obteniendo tabla warnings:', error);
+    res.status(500).json({ error: 'Error obteniendo tabla warnings' });
+  }
 });
 
 // Evitar que el servidor se inicie durante las pruebas

@@ -11,6 +11,7 @@ const { jwtSign } = require('../utils/jwt');
 const { createTablaDetail, getAllTablaDetails } = require('./models/TableDetails.dao');
 const { createTablaWarning, getAllTablaWarnings } = require('./models/TableWarning.dao');
 const { getAccionCorrectivas } = require('./models/accionCorrectivas.dao');
+const { getQuestions } = require('./models/questions.dao');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -109,7 +110,7 @@ app.get('/tabla-warning', async (req, res) => {
   }
 });
 
-// Ruta para obtener todos los datos de accionCorrectivas.json
+// Ruta para obtener todos los datos de accionCorrectivas
 app.get('/accion-correctivas', async (req, res) => {
   try {
     const data = await getAccionCorrectivas();
@@ -119,6 +120,19 @@ app.get('/accion-correctivas', async (req, res) => {
     res.status(500).json({ error: 'Error obteniendo datos de accion correctivas' });
   }
 });
+
+// Ruta para obtener todos los datos de questions
+app.get('/questions', async (req, res) => {
+  try {
+    const data = await getQuestions();
+    res.status(200).json(data);
+  } catch (error) {
+    console.error('Error obteniendo datos de accion correctivas:', error);
+    res.status(500).json({ error: 'Error obteniendo datos de accion correctivas' });
+  }
+});
+
+
 
 // Middleware para manejo de errores
 app.use((err, req, res, next) => {

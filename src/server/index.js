@@ -71,7 +71,6 @@ app.post('/tabla-details', async (req, res) => {
   }
 });
 
-
 app.get('/tabla-details', async (req, res) => {
   try {
     const tablaDetails = await getAllTablaDetails();

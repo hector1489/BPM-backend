@@ -10,6 +10,7 @@ const { verifyCredentials } = require('./models/Users.dao');
 const { jwtSign } = require('../utils/jwt');
 const { createTablaDetail, getAllTablaDetails } = require('./models/TableDetails.dao');
 const { createTablaWarning, getAllTablaWarnings } = require('./models/TableWarning.dao');
+const { getAccionCorrectivas } = require('./models/accionCorrectivas.dao');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -52,10 +53,10 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// Rutas para tabla-details
-app.post('/tabla-details', verifyToken, async (req, res) => {
+// Ruta para tabla-details
+app.post('/tabla-details', async (req, res) => {
   const tabla = req.body;
-
+  
   // Validar datos de entrada
   if (!tabla || typeof tabla !== 'object') {
     return res.status(400).json({ error: 'Datos inválidos' });
@@ -70,7 +71,8 @@ app.post('/tabla-details', verifyToken, async (req, res) => {
   }
 });
 
-app.get('/tabla-details', verifyToken, async (req, res) => {
+
+app.get('/tabla-details', async (req, res) => {
   try {
     const tablaDetails = await getAllTablaDetails();
     res.status(200).json(tablaDetails);
@@ -81,7 +83,7 @@ app.get('/tabla-details', verifyToken, async (req, res) => {
 });
 
 // Rutas para tabla-warning
-app.post('/tabla-warning', verifyToken, async (req, res) => {
+app.post('/tabla-warning', async (req, res) => {
   const tabla = req.body;
 
   // Validar datos de entrada
@@ -98,7 +100,7 @@ app.post('/tabla-warning', verifyToken, async (req, res) => {
   }
 });
 
-app.get('/tabla-warning', verifyToken, async (req, res) => {
+app.get('/tabla-warning', async (req, res) => {
   try {
     const tablaWarnings = await getAllTablaWarnings();
     res.status(200).json(tablaWarnings);
@@ -109,12 +111,10 @@ app.get('/tabla-warning', verifyToken, async (req, res) => {
 });
 
 // Ruta para obtener todos los datos de accionCorrectivas.json
-const accionCorrectivasFilePath = path.join(__dirname, 'data', 'accionCorrectivas.json');
-
 app.get('/accion-correctivas', async (req, res) => {
   try {
-    const data = fs.readFileSync(accionCorrectivasFilePath, 'utf8');
-    res.status(200).json(JSON.parse(data));
+    const data = await getAccionCorrectivas();
+    res.status(200).json(data);
   } catch (error) {
     console.error('Error obteniendo datos de accion correctivas:', error);
     res.status(500).json({ error: 'Error obteniendo datos de accion correctivas' });

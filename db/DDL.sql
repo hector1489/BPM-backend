@@ -1,6 +1,6 @@
 CREATE DATABASE bpm;
 
-USE bpm;
+\c bpm
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -10,8 +10,6 @@ CREATE TABLE users (
     email VARCHAR(100) NOT NULL,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-/*Script tablas*/
 
 CREATE TABLE tabla_details (
     id SERIAL PRIMARY KEY,

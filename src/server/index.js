@@ -38,10 +38,10 @@ app.post('/register', async (req, res) => {
 
 // Ruta de login
 app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    const user = await verifyCredentials(email, password);
+    const user = await verifyCredentials(username, password);
     if (user.length === 0) {
       return res.status(401).json({ error: 'Credenciales incorrectas' });
     }

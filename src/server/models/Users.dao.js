@@ -1,8 +1,8 @@
 const db = require('../database/db');
 const { compareSync } = require('../../utils/bcrypt');
 
-const verifyCredentials = async (email, password) => {
-    const [user] = await db('SELECT * FROM usuarios WHERE email = $1', [email]);
+const verifyCredentials = async (username, password) => {
+    const [user] = await db('SELECT * FROM usuarios WHERE username = $1', [username]);
     return compareSync(password, user.password) ? [user] : [];
 };
 

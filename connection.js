@@ -1,11 +1,12 @@
 const mysql = require('mysql');
+require('dotenv').config();
 
 // Configuración de la conexión
 const connection = mysql.createConnection({
-    host: '', 
-    user: '',
-    password: '',
-    database: '' 
+    host: process.env.DB_HOST, 
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME 
 });
 
 // Establecer la conexión
@@ -17,5 +18,4 @@ connection.connect(error => {
     console.log('Conectado a la base de datos como el ID ' + connection.threadId);
 });
 
-// Cerrar la conexión
-connection.end();
+module.exports = connection;

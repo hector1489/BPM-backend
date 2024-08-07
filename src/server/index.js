@@ -56,22 +56,32 @@ app.post('/login', async (req, res) => {
 
 // Ruta para tabla-details
 app.post('/tabla-details', async (req, res) => {
-  const tabla = req.body;
-  
+  const { tablaId, datos } = req.body;
+
   // Validar datos de entrada
-  if (!tabla || typeof tabla !== 'object') {
+  if (!tablaId || !Array.isArray(datos)) {
+    console.error('Datos inválidos:', req.body);
     return res.status(400).json({ error: 'Datos inválidos' });
   }
 
   try {
-    const newTablaDetail = await createTablaDetail(tabla);
-    res.status(201).json(newTablaDetail);
+    const results = [];
+
+    // Procesar cada fila de datos
+    for (const fila of datos) {
+      const result = await createTablaDetail(fila);
+      results.push(result);
+    }
+
+    res.status(201).json(results);
   } catch (error) {
     console.error('Error guardando tabla detail:', error);
     res.status(500).json({ error: 'Error guardando tabla detail' });
   }
 });
 
+
+// Ruta para obtener todos los detalles de la tabla
 app.get('/tabla-details', async (req, res) => {
   try {
     const tablaDetails = await getAllTablaDetails();

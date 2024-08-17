@@ -1,7 +1,7 @@
-INSERT INTO users (username, password, direction, email)
+INSERT INTO users (username, email, role,  password )
 VALUES
-    ('usuario1', 'hashedpassword1', 'Direccion 1', 'usuario1@example.com'),
-    ('usuario2', 'hashedpassword2', 'Direccion 2', 'usuario2@example.com');
+    ('admin', 'usuario1@example.com', 'administrador', 'admin'),
+    ('admin2', 'usuario2@example.com', 'administrado', 'admin2');
 
 INSERT INTO sections (name) VALUES 
 ('BPM INFRAESTRUCTURA Y REQUERIMIENTOS LEGALES'),

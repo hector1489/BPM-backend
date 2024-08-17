@@ -25,10 +25,10 @@ const tablaWarningData = [];
 
 // Ruta de registro
 app.post('/register', async (req, res) => {
-  const { email, password, direction, rol } = req.body;
+  const { username, email, role,  password } = req.body;
 
   try {
-    const newUser = await createUsuario({ email, password, direction, rol });
+    const newUser = await createUsuario({ username, email, role,  password });
     res.status(201).json(newUser);
   } catch (error) {
     console.error('Error registrando usuario:', error);

@@ -5,11 +5,12 @@ CREATE DATABASE bpm;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(100) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    direction VARCHAR(200) NOT NULL,
     email VARCHAR(100) NOT NULL,
+    role  VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+ 
 
 CREATE TABLE tabla_details (
     id SERIAL PRIMARY KEY,

@@ -19,6 +19,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 
+
 // Simulando una base de datos en memoria
 const tablaDetailsData = [];
 const tablaWarningData = [];

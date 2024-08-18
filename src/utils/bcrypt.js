@@ -5,8 +5,13 @@ const hashPassword = (password) => {
 };
 
 const compareSync = (password, hash) => {
-  return bcrypt.compareSync(password, hash);
+  console.log("Password:", password);
+  console.log("Hash:", hash);
+  const isMatch = bcrypt.compareSync(password, hash);
+  console.log("Comparison result:", isMatch);
+  return isMatch;
 };
+
 
 const encrypt = async (password) => {
   const salt = await bcrypt.genSalt(10);

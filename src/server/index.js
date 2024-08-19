@@ -48,7 +48,11 @@ app.post('/login', async (req, res) => {
     }
 
     const token = jwtSign({ userId: user[0].id });
-    res.json({ token });
+    res.json({
+      token,
+      usuarioId: user[0].id,
+      role: user[0].role
+    });
   } catch (error) {
     console.error('Error en login:', error);
     res.status(500).json({ error: 'Error en login' });

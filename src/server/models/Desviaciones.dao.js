@@ -25,6 +25,16 @@ const createDesviacion = async (desviacionData) => {
     authToken
   } = desviacionData;
 
+  // Validación de los campos antes de realizar la inserción
+  if (!numeroRequerimiento || !preguntasAuditadas || !desviacionOCriterio || 
+      !tipoDeAccion || !responsableProblema || !local || !criticidad ||
+      !accionesCorrectivas || !fechaRecepcionSolicitud || !fechaSolucionProgramada ||
+      !estado || !fechaCambioEstado || !contactoClientes || !evidenciaFotografica ||
+      !detalleFoto || !auditor || !correo || !fechaUltimaModificacion || 
+      !authToken) {
+    throw new Error('Datos incompletos o inválidos.');
+  }
+
   try {
     await db(
       `INSERT INTO desviaciones (
@@ -74,6 +84,7 @@ const createDesviacion = async (desviacionData) => {
     throw new Error('Error al almacenar los datos en la base de datos');
   }
 };
+
 
 module.exports = {
   createDesviacion,

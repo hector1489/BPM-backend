@@ -88,7 +88,20 @@ app.get('/questions', async (req, res) => {
 app.post('/send-data', async (req, res) => {
   try {
     const datosTabla = req.body;
+    console.log('Datos recibidos:', datosTabla);
 
+    // Validación de la estructura de los datos
+    for (const dato of datosTabla) {
+      if (!dato.numeroRequerimiento || !dato.preguntasAuditadas || !dato.desviacionOCriterio || 
+          !dato.responsableProblema || !dato.local || !dato.criticidad ||
+          !dato.accionesCorrectivas || !dato.fechaRecepcionSolicitud || !dato.fechaSolucionProgramada ||
+          !dato.estado || !dato.contactoClientes || !dato.auditor || !dato.authToken) {
+        return res.status(400).json({ error: 'Datos incompletos o inválidos.' });
+      }
+    }
+    
+
+    // Si la validación es exitosa, se pasan los datos al DAO
     for (const dato of datosTabla) {
       await createDesviacion(dato);
     }
@@ -99,6 +112,7 @@ app.post('/send-data', async (req, res) => {
     res.status(500).json({ error: 'Error al almacenar los datos en la base de datos.' });
   }
 });
+
 
 
 // Middleware para manejo de errores

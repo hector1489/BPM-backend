@@ -59,71 +59,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// Ruta para tabla-details
-app.post('/tabla-details', async (req, res) => {
-  const { tablaId, datos } = req.body;
-
-  // Validar datos de entrada
-  if (!tablaId || !Array.isArray(datos)) {
-    console.error('Datos inválidos:', req.body);
-    return res.status(400).json({ error: 'Datos inválidos' });
-  }
-
-  try {
-    const results = [];
-
-    // Procesar cada fila de datos
-    for (const fila of datos) {
-      const result = await createTablaDetail(fila);
-      results.push(result);
-    }
-
-    res.status(201).json(results);
-  } catch (error) {
-    console.error('Error guardando tabla detail:', error);
-    res.status(500).json({ error: 'Error guardando tabla detail' });
-  }
-});
-
-
-// Ruta para obtener todos los detalles de la tabla
-app.get('/tabla-details', async (req, res) => {
-  try {
-    const tablaDetails = await getAllTablaDetails();
-    res.status(200).json(tablaDetails);
-  } catch (error) {
-    console.error('Error obteniendo tabla details:', error);
-    res.status(500).json({ error: 'Error obteniendo tabla details' });
-  }
-});
-
-// Rutas para tabla-warning
-app.post('/tabla-warning', async (req, res) => {
-  const tabla = req.body;
-
-  // Validar datos de entrada
-  if (!tabla || typeof tabla !== 'object') {
-    return res.status(400).json({ error: 'Datos inválidos' });
-  }
-
-  try {
-    const newTablaWarning = await createTablaWarning(tabla);
-    res.status(201).json(newTablaWarning);
-  } catch (error) {
-    console.error('Error guardando tabla warning:', error);
-    res.status(500).json({ error: 'Error guardando tabla warning' });
-  }
-});
-
-app.get('/tabla-warning', async (req, res) => {
-  try {
-    const tablaWarnings = await getAllTablaWarnings();
-    res.status(200).json(tablaWarnings);
-  } catch (error) {
-    console.error('Error obteniendo tabla warnings:', error);
-    res.status(500).json({ error: 'Error obteniendo tabla warnings' });
-  }
-});
 
 // Ruta para obtener todos los datos de accionCorrectivas
 app.get('/accion-correctivas', async (req, res) => {
@@ -144,6 +79,88 @@ app.get('/questions', async (req, res) => {
   } catch (error) {
     console.error('Error obteniendo datos de accion correctivas:', error);
     res.status(500).json({ error: 'Error obteniendo datos de accion correctivas' });
+  }
+});
+
+
+// Ruta para recibir y almacenar los datos
+router.post('/send-data', async (req, res) => {
+  try {
+    const datosTabla = req.body;
+
+    for (const dato of datosTabla) {
+      const {
+        numeroRequerimiento,
+        preguntasAuditadas,
+        desviacionOCriterio,
+        tipoDeAccion,
+        responsableProblema,
+        local,
+        criticidad,
+        accionesCorrectivas,
+        fechaRecepcionSolicitud,
+        fechaSolucionProgramada,
+        estado,
+        fechaCambioEstado,
+        contactoClientes,
+        evidenciaFotografica,
+        detalleFoto,
+        auditor,
+        correo,
+        fechaUltimaModificacion,
+        authToken
+      } = dato;
+
+      await pool.query(
+        `INSERT INTO desviaciones (
+          numero_requerimiento, 
+          preguntas_auditadas, 
+          desviacion_o_criterio, 
+          tipo_de_accion, 
+          responsable_problema, 
+          local, 
+          criticidad, 
+          acciones_correctivas, 
+          fecha_recepcion_solicitud, 
+          fecha_solucion_programada, 
+          estado, 
+          fecha_cambio_estado, 
+          contacto_clientes, 
+          evidencia_fotografica, 
+          detalle_foto, 
+          auditor, 
+          correo, 
+          fecha_ultima_modificacion,
+          auth_token  -- Incluye authToken en el INSERT
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
+        [
+          numeroRequerimiento,
+          preguntasAuditadas,
+          desviacionOCriterio,
+          tipoDeAccion,
+          responsableProblema,
+          local,
+          criticidad,
+          accionesCorrectivas,
+          fechaRecepcionSolicitud,
+          fechaSolucionProgramada,
+          estado,
+          fechaCambioEstado,
+          contactoClientes,
+          evidenciaFotografica,
+          detalleFoto,
+          auditor,
+          correo,
+          fechaUltimaModificacion,
+          authToken
+        ]
+      );
+    }
+
+    res.status(200).json({ message: 'Datos almacenados con éxito.' });
+  } catch (error) {
+    console.error('Error al almacenar los datos:', error);
+    res.status(500).json({ error: 'Error al almacenar los datos en la base de datos.' });
   }
 });
 

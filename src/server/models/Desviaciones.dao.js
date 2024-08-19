@@ -1,6 +1,7 @@
 // models/Desviaciones.dao.js
 
 const db = require('../database/db');
+const moment = require('moment');
 
 const createDesviacion = async (desviacionData) => {
   const {
@@ -25,13 +26,16 @@ const createDesviacion = async (desviacionData) => {
     authToken
   } = desviacionData;
 
+  const fechaRecepcion = moment(fechaRecepcionSolicitud, 'D/M/YYYY').format('YYYY-MM-DD');
+  const fechaSolucion = moment(fechaSolucionProgramada, 'D/M/YYYY').format('YYYY-MM-DD');
+  const fechaCambio = moment(fechaCambioEstado, 'D/M/YYYY').format('YYYY-MM-DD');
+  const fechaModificacion = moment(fechaUltimaModificacion, 'D/M/YYYY').format('YYYY-MM-DD');
+  
   // Validación de los campos antes de realizar la inserción
   if (!numeroRequerimiento || !preguntasAuditadas || !desviacionOCriterio || 
-      !tipoDeAccion || !responsableProblema || !local || !criticidad ||
-      !accionesCorrectivas || !fechaRecepcionSolicitud || !fechaSolucionProgramada ||
-      !estado || !fechaCambioEstado || !contactoClientes || !evidenciaFotografica ||
-      !detalleFoto || !auditor || !correo || !fechaUltimaModificacion || 
-      !authToken) {
+    !responsableProblema || !local || !criticidad ||
+    !accionesCorrectivas || !fechaRecepcionSolicitud || !fechaSolucionProgramada ||
+    !estado || !contactoClientes || !auditor || !authToken) {
     throw new Error('Datos incompletos o inválidos.');
   }
 
@@ -67,16 +71,16 @@ const createDesviacion = async (desviacionData) => {
         local,
         criticidad,
         accionesCorrectivas,
-        fechaRecepcionSolicitud,
-        fechaSolucionProgramada,
+        fechaRecepcion,
+        fechaSolucion,
         estado,
-        fechaCambioEstado,
+        fechaCambio,
         contactoClientes,
         evidenciaFotografica,
         detalleFoto,
         auditor,
         correo,
-        fechaUltimaModificacion,
+        fechaModificacion,
         authToken
       ]
     );

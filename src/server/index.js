@@ -12,6 +12,7 @@ const { createTablaDetail, getAllTablaDetails } = require('./models/TableDetails
 const { createTablaWarning, getAllTablaWarnings } = require('./models/TableWarning.dao');
 const { getAccionCorrectivas } = require('./models/accionCorrectivas.dao');
 const { getQuestions } = require('./models/questions.dao');
+const { createDesviacion } = require('./models/Desviaciones.dao');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -84,77 +85,12 @@ app.get('/questions', async (req, res) => {
 
 
 // Ruta para recibir y almacenar los datos
-router.post('/send-data', async (req, res) => {
+app.post('/send-data', async (req, res) => {
   try {
     const datosTabla = req.body;
 
     for (const dato of datosTabla) {
-      const {
-        numeroRequerimiento,
-        preguntasAuditadas,
-        desviacionOCriterio,
-        tipoDeAccion,
-        responsableProblema,
-        local,
-        criticidad,
-        accionesCorrectivas,
-        fechaRecepcionSolicitud,
-        fechaSolucionProgramada,
-        estado,
-        fechaCambioEstado,
-        contactoClientes,
-        evidenciaFotografica,
-        detalleFoto,
-        auditor,
-        correo,
-        fechaUltimaModificacion,
-        authToken
-      } = dato;
-
-      await pool.query(
-        `INSERT INTO desviaciones (
-          numero_requerimiento, 
-          preguntas_auditadas, 
-          desviacion_o_criterio, 
-          tipo_de_accion, 
-          responsable_problema, 
-          local, 
-          criticidad, 
-          acciones_correctivas, 
-          fecha_recepcion_solicitud, 
-          fecha_solucion_programada, 
-          estado, 
-          fecha_cambio_estado, 
-          contacto_clientes, 
-          evidencia_fotografica, 
-          detalle_foto, 
-          auditor, 
-          correo, 
-          fecha_ultima_modificacion,
-          auth_token  -- Incluye authToken en el INSERT
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
-        [
-          numeroRequerimiento,
-          preguntasAuditadas,
-          desviacionOCriterio,
-          tipoDeAccion,
-          responsableProblema,
-          local,
-          criticidad,
-          accionesCorrectivas,
-          fechaRecepcionSolicitud,
-          fechaSolucionProgramada,
-          estado,
-          fechaCambioEstado,
-          contactoClientes,
-          evidenciaFotografica,
-          detalleFoto,
-          auditor,
-          correo,
-          fechaUltimaModificacion,
-          authToken
-        ]
-      );
+      await createDesviacion(dato);
     }
 
     res.status(200).json({ message: 'Datos almacenados con éxito.' });
@@ -163,7 +99,6 @@ router.post('/send-data', async (req, res) => {
     res.status(500).json({ error: 'Error al almacenar los datos en la base de datos.' });
   }
 });
-
 
 
 // Middleware para manejo de errores

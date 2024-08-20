@@ -12,7 +12,7 @@ const { createTablaDetail, getAllTablaDetails } = require('./models/TableDetails
 const { createTablaWarning, getAllTablaWarnings } = require('./models/TableWarning.dao');
 const { getAccionCorrectivas } = require('./models/accionCorrectivas.dao');
 const { getQuestions } = require('./models/questions.dao');
-const { createDesviacion } = require('./models/Desviaciones.dao');
+const { createDesviacion, getAllDesviaciones, updateDesviacion  } = require('./models/Desviaciones.dao');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -113,6 +113,30 @@ app.post('/send-data', async (req, res) => {
   }
 });
 
+// Ruta para recuperar todas las desviaciones
+app.get('/desviaciones', async (req, res) => {
+  try {
+    const desviaciones = await getAllDesviaciones();
+    res.status(200).json(desviaciones);
+  } catch (error) {
+    console.error('Error al recuperar las desviaciones:', error);
+    res.status(500).json({ error: 'Error al recuperar las desviaciones de la base de datos.' });
+  }
+});
+
+// Ruta para actualizar una desviación por ID
+app.put('/desviaciones/:id', async (req, res) => {
+  const id = req.params.id;
+  const updatedData = req.body;
+
+  try {
+    await updateDesviacion(id, updatedData);
+    res.status(200).json({ message: 'Desviación actualizada con éxito.' });
+  } catch (error) {
+    console.error('Error al actualizar la desviación:', error);
+    res.status(500).json({ error: 'Error al actualizar la desviación en la base de datos.' });
+  }
+});
 
 
 // Middleware para manejo de errores

@@ -179,11 +179,19 @@ const updateDesviacion = async (id, desviacionData) => {
   }
 };
 
+const deleteDesviacion = async (id) => {
+  try {
+    await db(`DELETE FROM desviaciones WHERE id = $1`, [id]);
+  } catch (error) {
+    throw new Error('Error al eliminar la desviación en la base de datos');
+  }
+};
 
 module.exports = {
   createDesviacion,
   getAllDesviaciones,
   updateDesviacion,
+  deleteDesviacion
 };
 
 

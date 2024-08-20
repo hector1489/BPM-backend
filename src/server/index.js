@@ -12,7 +12,7 @@ const { createTablaDetail, getAllTablaDetails } = require('./models/TableDetails
 const { createTablaWarning, getAllTablaWarnings } = require('./models/TableWarning.dao');
 const { getAccionCorrectivas } = require('./models/accionCorrectivas.dao');
 const { getQuestions } = require('./models/questions.dao');
-const { createDesviacion, getAllDesviaciones, updateDesviacion  } = require('./models/Desviaciones.dao');
+const { createDesviacion, getAllDesviaciones, updateDesviacion, deleteDesviacion  } = require('./models/Desviaciones.dao');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -138,6 +138,18 @@ app.put('/desviaciones/:id', async (req, res) => {
   }
 });
 
+// Ruta para eliminar una desviación por ID
+app.delete('/desviacionesDelete/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    await deleteDesviacion(id);
+    res.status(200).json({ message: 'Desviación eliminada con éxito.' });
+  } catch (error) {
+    console.error('Error al eliminar la desviación:', error);
+    res.status(500).json({ error: 'Error al eliminar la desviación en la base de datos.' });
+  }
+});
 
 // Middleware para manejo de errores
 app.use((err, req, res, next) => {

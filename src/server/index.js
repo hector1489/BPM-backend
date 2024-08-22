@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
+const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
@@ -13,9 +14,14 @@ const { createTablaWarning, getAllTablaWarnings } = require('./models/TableWarni
 const { getAccionCorrectivas } = require('./models/accionCorrectivas.dao');
 const { getQuestions } = require('./models/questions.dao');
 const { createDesviacion, getAllDesviaciones, updateDesviacion, deleteDesviacion  } = require('./models/Desviaciones.dao');
+const { listPhotos, uploadPhoto, getPhoto } = require('./models/s3.dao');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Configuración de almacenamiento para Multer
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 app.use(express.json());
 app.use(cors());
@@ -151,17 +157,53 @@ app.delete('/desviacionesDelete/:id', async (req, res) => {
   }
 });
 
+// Ruta para listar todas las fotos
+app.get('/photos', async (req, res) => {
+  try {
+    const photos = await listPhotos();
+    res.status(200).json(photos);
+  } catch (error) {
+    console.error('Error al listar las fotos:', error);
+    res.status(500).json({ error: 'Error al listar las fotos' });
+  }
+});
+
+// Ruta para subir una nueva foto
+app.post('/upload-photo', upload.single('photo'), async (req, res) => {
+  try {
+    const data = await uploadPhoto(req.file);
+    res.status(200).json({ message: 'Foto subida con éxito', data });
+  } catch (error) {
+    console.error('Error al subir la foto:', error);
+    res.status(500).json({ error: 'Error al subir la foto' });
+  }
+});
+
+
+// Ruta para recuperar una foto por su clave
+app.get('/photos/:key', async (req, res) => {
+  try {
+    const data = await getPhoto(req.params.key);
+    res.writeHead(200, { 'Content-Type': data.ContentType });
+    res.write(data.Body);
+    res.end();
+  } catch (error) {
+    console.error('Error al obtener la foto:', error);
+    res.status(500).json({ error: 'Error al obtener la foto' });
+  }
+});
+
+
 // Middleware para manejo de errores
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: 'Algo salió mal' });
 });
 
-// Evitar que el servidor se inicie durante las pruebas
-if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
-    console.log(`Servidor escuchando en http://localhost:${PORT}`);
-  });
-}
 
-module.exports = app;
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+});
+
+
+

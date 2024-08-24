@@ -171,6 +171,11 @@ app.get('/photos', async (req, res) => {
 // Ruta para subir una nueva foto
 app.post('/upload-photo', upload.single('photo'), async (req, res) => {
   try {
+    // Verificar si el archivo se ha subido correctamente
+    if (!req.file) {
+      return res.status(400).json({ error: 'No se ha subido ningún archivo' });
+    }
+
     const data = await uploadPhoto(req.file);
     res.status(200).json({ message: 'Foto subida con éxito', data });
   } catch (error) {

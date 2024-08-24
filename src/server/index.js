@@ -169,7 +169,7 @@ app.get('/photos', async (req, res) => {
 });
 
 // Ruta para subir una nueva foto
-app.post('/upload-photo', upload.single('photo'), async (req, res) => {
+app.post('/upload-photo', upload.single('image'), async (req, res) => {
   try {
     // Verificar si el archivo se ha subido correctamente
     if (!req.file) {

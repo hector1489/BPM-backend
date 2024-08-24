@@ -10,7 +10,7 @@ const s3 = new S3Client({
   },
 });
 
-const BUCKET_NAME = process.env.S3_BUCKET_NAME;
+const BUCKET_NAME = process.env.AWS_BUCKET_NAME;
 
 // Función para listar todas las fotos en un bucket de S3
 const listPhotos = async () => {
@@ -34,7 +34,6 @@ const uploadPhoto = async (file) => {
     Key: key,
     Body: file.buffer,
     ContentType: file.mimetype,
-    ACL: 'public-read'
   };
 
   try {

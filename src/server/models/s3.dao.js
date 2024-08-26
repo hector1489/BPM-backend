@@ -1,4 +1,5 @@
 const { S3Client, ListObjectsV2Command, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const { v4: uuidv4 } = require('uuid');
 
 // Configuración de AWS S3
@@ -20,7 +21,22 @@ const listPhotos = async () => {
 
   try {
     const data = await s3.send(new ListObjectsV2Command(params));
-    return data.Contents;
+
+    // Generar presigned URLs para cada foto
+    const photos = await Promise.all(
+      data.Contents.map(async (item) => {
+        const url = await getSignedUrl(s3, new GetObjectCommand({
+          Bucket: BUCKET_NAME,
+          Key: item.Key,
+        }), { expiresIn: 3600 }); // URL expira en 1 hora (3600 segundos)
+        return {
+          key: item.Key,
+          url,
+        };
+      })
+    );
+
+    return photos;
   } catch (error) {
     throw new Error(`Error al listar las fotos: ${error.message}`);
   }
@@ -38,7 +54,17 @@ const uploadPhoto = async (file) => {
 
   try {
     const data = await s3.send(new PutObjectCommand(params));
-    return data;
+
+    // Generar una URL firmada para la foto subida
+    const url = await getSignedUrl(s3, new GetObjectCommand({
+      Bucket: BUCKET_NAME,
+      Key: key,
+    }), { expiresIn: 3600 }); // URL expira en 1 hora (3600 segundos)
+
+    return {
+      key,
+      url,
+    };
   } catch (error) {
     throw new Error(`Error al subir la foto: ${error.message}`);
   }
@@ -52,8 +78,13 @@ const getPhoto = async (key) => {
   };
 
   try {
-    const data = await s3.send(new GetObjectCommand(params));
-    return data;
+    // Generar una URL firmada para la foto solicitada
+    const url = await getSignedUrl(s3, new GetObjectCommand(params), { expiresIn: 3600 });
+
+    return {
+      key,
+      url,
+    };
   } catch (error) {
     throw new Error(`Error al obtener la foto: ${error.message}`);
   }

@@ -1,5 +1,19 @@
 const db = require('../database/db');
 const moment = require('moment');
+const nodemailer = require('nodemailer');
+
+// Configuración de nodemailer
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    type: 'OAuth2',
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+    clientId: process.env.OAUTH_CLIENTID,
+    clientSecret: process.env.OAUTH_CLIENT_SECRET,
+    refreshToken: process.env.OAUTH_REFRESH_TOKEN
+  },
+});
 
 const createDesviacion = async (desviacionData) => {
   const {
@@ -83,6 +97,39 @@ const createDesviacion = async (desviacionData) => {
       ]
     );
 
+    // Enviar el correo después de la inserción exitosa
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: 'Fungily@gmail.com',
+      subject: `Nueva Desviación Creada: ${numeroRequerimiento}`,
+      text: `Se ha creado una nueva desviación con el número de requerimiento: ${numeroRequerimiento}.
+      
+      Detalles de la desviación:
+      - Preguntas Auditadas: ${preguntasAuditadas}
+      - Desviación o Criterio: ${desviacionOCriterio}
+      - Tipo de Acción: ${tipoDeAccion}
+      - Responsable del Problema: ${responsableProblema}
+      - Local: ${local}
+      - Criticidad: ${criticidad}
+      - Fecha de Recepción: ${fechaRecepcion}
+      - Fecha de Solución Programada: ${fechaSolucion}
+      - Estado: ${estado}
+      - Auditor: ${auditor}
+      - Contacto con Clientes: ${contactoClientes}
+      
+      Por favor, revisa el sistema para más detalles.
+      `,
+    };
+
+    // Enviar el correo usando nodemailer
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log('Correo enviado exitosamente.');
+    } catch (emailError) {
+      console.error('Error al enviar el correo:', emailError);
+      throw new Error('Error al enviar el correo');
+    }    
+    console.log('Correo enviado exitosamente.');
 
   } catch (error) {
     throw new Error('Error al almacenar los datos en la base de datos');
@@ -193,6 +240,3 @@ module.exports = {
   updateDesviacion,
   deleteDesviacion
 };
-
-
-

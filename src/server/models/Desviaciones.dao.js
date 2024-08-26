@@ -1,13 +1,14 @@
 const db = require('../database/db');
 const moment = require('moment');
+require('dotenv').config();
 const nodemailer = require('nodemailer');
 
 // Configuración de Nodemailer
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'bbpmauditorias@gmail.com',
-    pass: 'Bpm-2024'
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
   }
 });
 

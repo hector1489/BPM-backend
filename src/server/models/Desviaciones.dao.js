@@ -1,16 +1,5 @@
 const db = require('../database/db');
 const moment = require('moment');
-require('dotenv').config();
-const nodemailer = require('nodemailer');
-
-// Configuración de Nodemailer
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
 
 const createDesviacion = async (desviacionData) => {
   const {
@@ -94,35 +83,6 @@ const createDesviacion = async (desviacionData) => {
       ]
     );
 
-     // Configuración del correo electrónico
-     const mailOptions = {
-      from: 'contacto@fungilydev.com',
-      to: correo, // Puedes modificar esto para enviar a otros correos si es necesario
-      subject: `Nueva desviación creada - ${numeroRequerimiento}`,
-      text: `
-        Se ha creado una nueva desviación con los siguientes detalles:
-
-        Número de Requerimiento: ${numeroRequerimiento}
-        Preguntas Auditadas: ${preguntasAuditadas}
-        Desviación o Criterio: ${desviacionOCriterio}
-        Tipo de Acción: ${tipoDeAccion}
-        Responsable del Problema: ${responsableProblema}
-        Local: ${local}
-        Criticidad: ${criticidad}
-        Acciones Correctivas: ${accionesCorrectivas}
-        Fecha de Recepción de la Solicitud: ${fechaRecepcionSolicitud}
-        Fecha de Solución Programada: ${fechaSolucionProgramada}
-        Estado: ${estado}
-        Contacto Clientes: ${contactoClientes}
-        Auditor: ${auditor}
-        Fecha de Última Modificación: ${fechaUltimaModificacion}
-
-        Por favor, revisa la información y toma las acciones necesarias.
-      `,
-    };
-
-    // Envío del correo electrónico
-    await transporter.sendMail(mailOptions);
 
   } catch (error) {
     throw new Error('Error al almacenar los datos en la base de datos');

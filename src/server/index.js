@@ -147,7 +147,7 @@ app.put('/desviaciones/:id', async (req, res) => {
 // Ruta para eliminar una desviación por ID
 app.delete('/desviacionesDelete/:id', async (req, res) => {
   const id = req.params.id;
-
+  
   try {
     await deleteDesviacion(id);
     res.status(200).json({ message: 'Desviación eliminada con éxito.' });

@@ -100,9 +100,9 @@ const createDesviacion = async (desviacionData) => {
     // Enviar el correo después de la inserción exitosa
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: 'Fungily@gmail.com',
-      subject: `Nueva Desviación Creada: ${numeroRequerimiento}`,
-      text: `Se ha creado una nueva desviación con el número de requerimiento: ${numeroRequerimiento}.
+      to: 'fungilydev@gmail.com',
+      subject: 'BPM AUDITORIAS',
+      text: `Se ha creado una nueva Incidencia con el número de requerimiento: ${numeroRequerimiento}.
       
       Detalles de la desviación:
       - Preguntas Auditadas: ${preguntasAuditadas}

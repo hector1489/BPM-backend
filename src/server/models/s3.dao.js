@@ -53,7 +53,7 @@ const uploadPhoto = async (file) => {
   };
 
   try {
-    const data = await s3.send(new PutObjectCommand(params));
+    await s3.send(new PutObjectCommand(params));
 
     // Generar una URL firmada para la foto subida
     const url = await getSignedUrl(s3, new GetObjectCommand({

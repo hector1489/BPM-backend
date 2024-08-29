@@ -14,7 +14,7 @@ const { createTablaWarning, getAllTablaWarnings } = require('./models/TableWarni
 const { getAccionCorrectivas } = require('./models/accionCorrectivas.dao');
 const { getQuestions } = require('./models/questions.dao');
 const { createDesviacion, getAllDesviaciones, updateDesviacion, deleteDesviacion  } = require('./models/Desviaciones.dao');
-const { listPhotos, uploadPhoto, getPhoto } = require('./models/s3.dao');
+const { listPhotos, uploadPhoto, getPhoto, deletePhoto } = require('./models/s3.dao');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -198,6 +198,22 @@ app.get('/photos/:key', async (req, res) => {
   }
 });
 
+// Ruta para eliminar una foto por su clave
+app.delete('/delete-photos/:key', async (req, res) => {
+  try {
+    const data = await deletePhoto(req.params.key);
+    res.status(200).json({ message: 'Foto eliminada con éxito', data });
+  } catch (error) {
+    console.error('Error al eliminar la foto:', error);
+    res.status(500).json({ error: 'Error al eliminar la foto' });
+  }
+});
+
+// Middleware para manejo de errores
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Algo salió mal' });
+});
 
 // Middleware para manejo de errores
 app.use((err, req, res, next) => {

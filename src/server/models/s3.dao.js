@@ -90,8 +90,24 @@ const getPhoto = async (key) => {
   }
 };
 
+// Función para eliminar una foto de S3 por su clave
+const deletePhoto = async (key) => {
+  const params = {
+    Bucket: BUCKET_NAME,
+    Key: key
+  };
+
+  try {
+    await s3.send(new DeleteObjectCommand(params));
+    return { message: 'Foto eliminada correctamente', key };
+  } catch (error) {
+    throw new Error(`Error al eliminar la foto: ${error.message}`);
+  }
+};
+
 module.exports = {
   listPhotos,
   uploadPhoto,
-  getPhoto
+  getPhoto,
+  deletePhoto
 };

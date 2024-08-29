@@ -200,6 +200,7 @@ app.get('/photos/:key', async (req, res) => {
 
 // Ruta para eliminar una foto por su clave
 app.delete('/delete-photos/:key', async (req, res) => {
+  console.log(req);
   try {
     const data = await deletePhoto(req.params.key);
     res.status(200).json({ message: 'Foto eliminada con éxito', data });

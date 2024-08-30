@@ -13,7 +13,7 @@ const { createTablaDetail, getAllTablaDetails } = require('./models/TableDetails
 const { createTablaWarning, getAllTablaWarnings } = require('./models/TableWarning.dao');
 const { getAccionCorrectivas } = require('./models/accionCorrectivas.dao');
 const { getQuestions } = require('./models/questions.dao');
-const { createDesviacion, getAllDesviaciones, updateDesviacion, deleteDesviacion  } = require('./models/Desviaciones.dao');
+const { createDesviacion, getAllDesviaciones, updateDesviacion, deleteDesviacion, getDesviacionesByAuditor  } = require('./models/Desviaciones.dao');
 const { listPhotos, uploadPhoto, getPhoto, deletePhoto } = require('./models/s3.dao');
 
 const app = express();
@@ -156,6 +156,20 @@ app.delete('/desviacionesDelete/:id', async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar la desviación en la base de datos.' });
   }
 });
+
+// Ruta para obtener desviaciones por auditor
+app.get('/desviaciones/auditor/:auditor', async (req, res) => {
+  const auditor = req.params.auditor;
+
+  try {
+    const desviaciones = await getDesviacionesByAuditor(auditor);
+    res.status(200).json(desviaciones);
+  } catch (error) {
+    console.error('Error al recuperar las desviaciones por auditor:', error);
+    res.status(500).json({ error: 'Error al recuperar las desviaciones por auditor de la base de datos.' });
+  }
+});
+
 
 // Ruta para listar todas las fotos
 app.get('/photos', async (req, res) => {

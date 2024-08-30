@@ -230,9 +230,21 @@ const deleteDesviacion = async (id) => {
   }
 };
 
+// Obtener desviaciones por auditor
+const getDesviacionesByAuditor = async (auditor) => {
+  try {
+    const results = await db(`SELECT * FROM desviaciones WHERE auditor = $1`, [auditor]);
+    return results.rows;
+  } catch (error) {
+    throw new Error('Error al recuperar desviaciones por auditor');
+  }
+};
+
+
 module.exports = {
   createDesviacion,
   getAllDesviaciones,
   updateDesviacion,
-  deleteDesviacion
+  deleteDesviacion,
+  getDesviacionesByAuditor
 };

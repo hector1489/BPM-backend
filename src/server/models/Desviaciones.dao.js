@@ -100,6 +100,8 @@ const createDesviacion = async (desviacionData) => {
       subject: 'BPM AUDITORIAS',
       text: `Se ha creado una nueva Incidencia con el número de requerimiento: ${numeroRequerimiento}.
       
+      USUARIO :  ${auditor}
+
       Detalles de la desviación:
       - Preguntas Auditadas: ${preguntasAuditadas}
       - Desviación o Criterio: ${desviacionOCriterio}
@@ -110,7 +112,6 @@ const createDesviacion = async (desviacionData) => {
       - Fecha de Recepción: ${fechaRecepcion}
       - Fecha de Solución Programada: ${fechaSolucion}
       - Estado: ${estado}
-      - Auditor: ${auditor}
       - Contacto con Clientes: ${contactoClientes}
       
       Por favor, revisa el sistema para más detalles.

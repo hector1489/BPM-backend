@@ -98,10 +98,7 @@ app.post('/send-data', async (req, res) => {
 
     // Validación de la estructura de los datos
     for (const dato of datosTabla) {
-      if (!dato.numeroRequerimiento || !dato.preguntasAuditadas || !dato.desviacionOCriterio || 
-          !dato.responsableProblema || !dato.local || !dato.criticidad ||
-          !dato.accionesCorrectivas || !dato.fechaRecepcionSolicitud || !dato.fechaSolucionProgramada ||
-          !dato.estado || !dato.contactoClientes || !dato.auditor || !dato.authToken) {
+      if (!dato.numeroRequerimiento || !dato.preguntasAuditadas || !dato.auditor || !dato.authToken) {
         return res.status(400).json({ error: 'Datos incompletos o inválidos.' });
       }
     }

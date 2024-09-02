@@ -40,10 +40,7 @@ const createDesviacion = async (desviacionData) => {
   const fechaModificacion = moment(fechaUltimaModificacion, 'D/M/YYYY').format('YYYY-MM-DD');
   
   // Validación de los campos antes de realizar la inserción
-  if (!numeroRequerimiento || !preguntasAuditadas || !desviacionOCriterio || 
-    !responsableProblema || !local || !criticidad ||
-    !accionesCorrectivas || !fechaRecepcionSolicitud || !fechaSolucionProgramada ||
-    !estado || !contactoClientes || !auditor || !authToken) {
+  if (!numeroRequerimiento || !preguntasAuditadas || !auditor || !authToken) {
     throw new Error('Datos incompletos o inválidos.');
   }
 

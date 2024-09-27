@@ -11,6 +11,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const handleEmptyField = (value) => {
+  return value && value.trim() !== '' ? value : 'N/A';
+};
+
 const createDesviacion = async (desviacionData) => {
   const {
     numeroRequerimiento,
@@ -34,15 +38,34 @@ const createDesviacion = async (desviacionData) => {
     authToken
   } = desviacionData;
 
-  const fechaRecepcion = moment(fechaRecepcionSolicitud, 'D/M/YYYY').format('YYYY-MM-DD');
-  const fechaSolucion = moment(fechaSolucionProgramada, 'D/M/YYYY').format('YYYY-MM-DD');
-  const fechaCambio = moment(fechaCambioEstado, 'D/M/YYYY').format('YYYY-MM-DD');
-  const fechaModificacion = moment(fechaUltimaModificacion, 'D/M/YYYY').format('YYYY-MM-DD');
-  
-  // Validación de los campos antes de realizar la inserción
-  if (!numeroRequerimiento || !preguntasAuditadas || !auditor || !authToken) {
-    throw new Error('Datos incompletos o inválidos.');
-  }
+  // Helper function to format dates
+  const formatDate = (dateString) => {
+    const formattedDate = moment(dateString, 'D/M/YYYY', true); // Strict parsing
+    return formattedDate.isValid() ? formattedDate.format('YYYY-MM-DD') : 'N/A';
+  };
+
+  // Handle undefined or null fields
+  const safeValues = {
+    numeroRequerimiento: handleEmptyField(numeroRequerimiento),
+    preguntasAuditadas: handleEmptyField(preguntasAuditadas),
+    desviacionOCriterio: handleEmptyField(desviacionOCriterio),
+    tipoDeAccion: handleEmptyField(tipoDeAccion),
+    responsableProblema: handleEmptyField(responsableProblema),
+    local: handleEmptyField(local),
+    criticidad: handleEmptyField(criticidad),
+    accionesCorrectivas: handleEmptyField(accionesCorrectivas),
+    fechaRecepcion: formatDate(fechaRecepcionSolicitud),
+    fechaSolucion: formatDate(fechaSolucionProgramada),
+    estado: handleEmptyField(estado),
+    fechaCambio: formatDate(fechaCambioEstado),
+    contactoClientes: handleEmptyField(contactoClientes),
+    evidenciaFotografica: handleEmptyField(evidenciaFotografica),
+    detalleFoto: handleEmptyField(detalleFoto),
+    auditor: handleEmptyField(auditor),
+    correo: handleEmptyField(correo),
+    fechaModificacion: formatDate(fechaUltimaModificacion),
+    authToken: authToken || 'N/A' // Default to 'N/A' if authToken is missing
+  };
 
   try {
     await db(
@@ -68,67 +91,62 @@ const createDesviacion = async (desviacionData) => {
         auth_token
       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
       [
-        numeroRequerimiento,
-        preguntasAuditadas,
-        desviacionOCriterio,
-        tipoDeAccion,
-        responsableProblema,
-        local,
-        criticidad,
-        accionesCorrectivas,
-        fechaRecepcion,
-        fechaSolucion,
-        estado,
-        fechaCambio,
-        contactoClientes,
-        evidenciaFotografica,
-        detalleFoto,
-        auditor,
-        correo,
-        fechaModificacion,
-        authToken
+        safeValues.numeroRequerimiento,
+        safeValues.preguntasAuditadas,
+        safeValues.desviacionOCriterio,
+        safeValues.tipoDeAccion,
+        safeValues.responsableProblema,
+        safeValues.local,
+        safeValues.criticidad,
+        safeValues.accionesCorrectivas,
+        safeValues.fechaRecepcion,
+        safeValues.fechaSolucion,
+        safeValues.estado,
+        safeValues.fechaCambio,
+        safeValues.contactoClientes,
+        safeValues.evidenciaFotografica,
+        safeValues.detalleFoto,
+        safeValues.auditor,
+        safeValues.correo,
+        safeValues.fechaModificacion,
+        safeValues.authToken
       ]
     );
 
-    // Enviar el correo después de la inserción exitosa
+    // Prepare and send email
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: correo && correo.trim() !== '' ? correo : 'fungilydev@gmail.com',
+      to: safeValues.correo.trim() !== '' ? safeValues.correo : 'fungilydev@gmail.com',
       subject: 'BPM AUDITORIAS',
-      text: `Se ha creado una nueva Incidencia con el número de requerimiento: ${numeroRequerimiento}.
+      text: `Se ha creado una nueva Incidencia con el número de requerimiento: ${safeValues.numeroRequerimiento}.
       
-      USUARIO :  ${auditor}
+      USUARIO: ${safeValues.auditor}
 
       Detalles de la desviación:
-      - Preguntas Auditadas: ${preguntasAuditadas}
-      - Desviación o Criterio: ${desviacionOCriterio}
-      - Tipo de Acción: ${tipoDeAccion}
-      - Responsable del Problema: ${responsableProblema}
-      - Local: ${local}
-      - Criticidad: ${criticidad}
-      - Fecha de Recepción: ${fechaRecepcion}
-      - Fecha de Solución Programada: ${fechaSolucion}
-      - Estado: ${estado}
-      - Contacto con Clientes: ${contactoClientes}
+      - Preguntas Auditadas: ${safeValues.preguntasAuditadas}
+      - Desviación o Criterio: ${safeValues.desviacionOCriterio}
+      - Tipo de Acción: ${safeValues.tipoDeAccion}
+      - Responsable del Problema: ${safeValues.responsableProblema}
+      - Local: ${safeValues.local}
+      - Criticidad: ${safeValues.criticidad}
+      - Fecha de Recepción: ${safeValues.fechaRecepcion}
+      - Fecha de Solución Programada: ${safeValues.fechaSolucion}
+      - Estado: ${safeValues.estado}
+      - Contacto con Clientes: ${safeValues.contactoClientes}
       
-      Por favor, revisa el sistema para más detalles.
-      `,
+      Por favor, revisa el sistema para más detalles.`,
     };
 
-    // Enviar el correo usando nodemailer
-    try {
-      await transporter.sendMail(mailOptions);
-      console.log('Correo enviado exitosamente.');
-    } catch (emailError) {
-      console.error('Error al enviar el correo:', emailError);
-      throw new Error('Error al enviar el correo');
-    }    
+    // Send email using nodemailer
+    await transporter.sendMail(mailOptions);
     console.log('Correo enviado exitosamente.');
 
   } catch (error) {
-    throw new Error('Error al almacenar los datos en la base de datos');
+    console.error('Error al almacenar los datos en la base de datos o enviar el correo:', error.message);
+    // Consider logging the error or handling it as needed
   }
 };
+
 
 // Recuperar todas las desviaciones
 const getAllDesviaciones = async () => {

@@ -23,6 +23,7 @@ const PORT = process.env.PORT || 3000;
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+app.use(express.json());
 app.use(cors());
 
 

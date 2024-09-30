@@ -23,15 +23,7 @@ const PORT = process.env.PORT || 3000;
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-app.use(express.json());
-const corsOptions = {
-  origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 
 

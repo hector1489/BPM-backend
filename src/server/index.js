@@ -13,7 +13,7 @@ const { createTablaDetail, getAllTablaDetails } = require('./models/TableDetails
 const { createTablaWarning, getAllTablaWarnings } = require('./models/TableWarning.dao');
 const { getAccionCorrectivas } = require('./models/accionCorrectivas.dao');
 const { getQuestions } = require('./models/questions.dao');
-const { createDesviacion, getAllDesviaciones, updateDesviacion, deleteDesviacion, getDesviacionesByAuditor  } = require('./models/Desviaciones.dao');
+const { createDesviacion, getAllDesviaciones, updateDesviacion, deleteDesviacion, getDesviacionesByAuditor } = require('./models/Desviaciones.dao');
 const { listPhotos, uploadPhoto, getPhoto, deletePhoto } = require('./models/s3.dao');
 
 const app = express();
@@ -26,18 +26,16 @@ const upload = multer({ storage: storage });
 app.use(express.json());
 app.use(cors());
 
-
-
 // Simulando una base de datos en memoria
 const tablaDetailsData = [];
 const tablaWarningData = [];
 
 // Ruta de registro
 app.post('/register', async (req, res) => {
-  const { username, email, role,  password } = req.body;
+  const { username, email, role, password } = req.body;
 
   try {
-    const newUser = await createUsuario({ username, email, role,  password });
+    const newUser = await createUsuario({ username, email, role, password });
     res.status(201).json(newUser);
   } catch (error) {
     console.error('Error registrando usuario:', error);
@@ -90,27 +88,33 @@ app.get('/questions', async (req, res) => {
   }
 });
 
-
 // Ruta para recibir y almacenar los datos
 app.post('/send-data', async (req, res) => {
   try {
     const datosTabla = req.body;
-    console.log('Datos recibidos:', datosTabla);
+    const resultados = [];
 
-    // Validación de la estructura de los datos
     for (const dato of datosTabla) {
-      if (!dato.numeroRequerimiento || !dato.preguntasAuditadas || !dato.auditor || !dato.authToken) {
+      if (!dato.numeroRequerimiento || !dato.auditor ) {
         return res.status(400).json({ error: 'Datos incompletos o inválidos.' });
       }
     }
-    
 
-    // Si la validación es exitosa, se pasan los datos al DAO
     for (const dato of datosTabla) {
-      await createDesviacion(dato);
+      try {
+        await createDesviacion(dato);
+        resultados.push({ numeroRequerimiento: dato.numeroRequerimiento, estado: 'Guardado con éxito' });
+      } catch (error) {
+        resultados.push({ 
+          numeroRequerimiento: dato.numeroRequerimiento, 
+          estado: 'Error al guardar', 
+          mensaje: error.message 
+        });
+      }
     }
 
-    res.status(200).json({ message: 'Datos almacenados con éxito.' });
+    res.status(207).json({ resultados });
+
   } catch (error) {
     console.error('Error al almacenar los datos:', error);
     res.status(500).json({ error: 'Error al almacenar los datos en la base de datos.' });
@@ -145,7 +149,7 @@ app.put('/desviaciones/:id', async (req, res) => {
 // Ruta para eliminar una desviación por ID
 app.delete('/desviacionesDelete/:id', async (req, res) => {
   const id = req.params.id;
-  
+
   try {
     await deleteDesviacion(id);
     res.status(200).json({ message: 'Desviación eliminada con éxito.' });
@@ -221,6 +225,61 @@ app.delete('/delete-photos/:key', async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar la foto' });
   }
 });
+
+// Ruta para crear un nuevo detalle de la tabla
+app.post('/tabla-details', async (req, res) => {
+  const { columna1, columna2, columna3, columna4 } = req.body;
+
+  try {
+    const newDetail = await createTablaDetail({ columna1, columna2, columna3, columna4 });
+    res.status(201).json(newDetail.rows[0]);
+  } catch (error) {
+    console.error('Error al crear tabla detail:', error);
+    res.status(500).json({ error: 'Error al crear tabla detail' });
+  }
+});
+
+// Ruta para obtener todos los detalles de la tabla
+app.get('/tabla-details', async (req, res) => {
+  try {
+    const details = await getAllTablaDetails();
+    res.status(200).json(details.rows);
+  } catch (error) {
+    console.error('Error al obtener tabla details:', error);
+    res.status(500).json({ error: 'Error al obtener tabla details' });
+  }
+});
+
+// Ruta para crear un nuevo warning
+app.post('/tabla-warnings', async (req, res) => {
+  try {
+    const data = req.body;
+
+    // Validación de los datos recibidos
+    if (!data.field1 || !data.field2 || !data.field3) {
+      return res.status(400).json({ error: 'Datos incompletos o inválidos.' });
+    }
+
+    const newWarning = await createTablaWarning(data);
+    res.status(201).json(newWarning.rows[0]);
+  } catch (error) {
+    console.error('Error al crear un warning:', error);
+    res.status(500).json({ error: 'Error al crear el warning.' });
+  }
+});
+
+// Ruta para obtener todos los warnings
+app.get('/tabla-warnings', async (req, res) => {
+  try {
+    const warnings = await getAllTablaWarnings();
+    res.status(200).json(warnings.rows);
+  } catch (error) {
+    console.error('Error al obtener los warnings:', error);
+    res.status(500).json({ error: 'Error al obtener los warnings.' });
+  }
+});
+
+
 
 // Middleware para manejo de errores
 app.use((err, req, res, next) => {

@@ -40,8 +40,8 @@ const createDesviacion = async (desviacionData) => {
 
   // Helper function to format dates
   const formatDate = (dateString) => {
-    const formattedDate = moment(dateString, 'D/M/YYYY', true); // Strict parsing
-    return formattedDate.isValid() ? formattedDate.format('YYYY-MM-DD') : 'N/A';
+    const formattedDate = moment(dateString, 'D/M/YYYY', true);
+    return formattedDate.isValid() ? formattedDate.format('YYYY-MM-DD') : null;
   };
 
   // Handle undefined or null fields
@@ -64,7 +64,7 @@ const createDesviacion = async (desviacionData) => {
     auditor: handleEmptyField(auditor),
     correo: handleEmptyField(correo),
     fechaModificacion: formatDate(fechaUltimaModificacion),
-    authToken: authToken || 'N/A' // Default to 'N/A' if authToken is missing
+    authToken: authToken || 'N/A'
   };
 
   try {

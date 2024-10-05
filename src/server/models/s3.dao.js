@@ -28,7 +28,7 @@ const listPhotos = async () => {
         const url = await getSignedUrl(s3, new GetObjectCommand({
           Bucket: BUCKET_NAME,
           Key: item.Key,
-        }), { expiresIn: 3600 }); // URL expira en 1 hora (3600 segundos)
+        }), { expiresIn: 3600 });
         return {
           key: item.Key,
           url,
@@ -59,7 +59,7 @@ const uploadPhoto = async (file) => {
     const url = await getSignedUrl(s3, new GetObjectCommand({
       Bucket: BUCKET_NAME,
       Key: key,
-    }), { expiresIn: 3600 }); // URL expira en 1 hora (3600 segundos)
+    }), { expiresIn: 3600 });
 
     return {
       key,

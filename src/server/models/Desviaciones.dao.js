@@ -2,7 +2,6 @@ const db = require('../database/db');
 const moment = require('moment');
 const nodemailer = require('nodemailer');
 
-// Configuración de nodemailer
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -38,13 +37,11 @@ const createDesviacion = async (desviacionData) => {
     authToken
   } = desviacionData;
 
-  // Helper function to format dates
   const formatDate = (dateString) => {
     const formattedDate = moment(dateString, 'D/M/YYYY', true);
     return formattedDate.isValid() ? formattedDate.format('YYYY-MM-DD') : null;
   };
 
-  // Handle undefined or null fields
   const safeValues = {
     numeroRequerimiento: handleEmptyField(numeroRequerimiento),
     preguntasAuditadas: handleEmptyField(preguntasAuditadas),
@@ -113,7 +110,6 @@ const createDesviacion = async (desviacionData) => {
       ]
     );
 
-    // Prepare and send email
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: safeValues.correo.trim() !== '' ? safeValues.correo : 'fungilydev@gmail.com',
@@ -137,18 +133,14 @@ const createDesviacion = async (desviacionData) => {
       Por favor, revisa el sistema para más detalles.`,
     };
 
-    // Send email using nodemailer
     await transporter.sendMail(mailOptions);
     console.log('Correo enviado exitosamente.');
 
   } catch (error) {
     console.error('Error al almacenar los datos en la base de datos o enviar el correo:', error.message);
-    // Consider logging the error or handling it as needed
   }
 };
 
-
-// Recuperar todas las desviaciones
 const getAllDesviaciones = async () => {
   try {
     const results = await db(`SELECT * FROM desviaciones`);
@@ -158,7 +150,6 @@ const getAllDesviaciones = async () => {
   }
 };
 
-// Actualizar una desviación por ID
 const updateDesviacion = async (id, desviacionData) => {
   const {
     numeroRequerimiento,
@@ -246,7 +237,6 @@ const deleteDesviacion = async (id) => {
   }
 };
 
-// Obtener desviaciones por auditor
 const getDesviacionesByAuditor = async (auditor) => {
   try {
     const results = await db(`SELECT * FROM desviaciones WHERE auditor = $1`, [auditor]);
@@ -255,7 +245,6 @@ const getDesviacionesByAuditor = async (auditor) => {
     throw new Error('Error al recuperar desviaciones por auditor');
   }
 };
-
 
 module.exports = {
   createDesviacion,

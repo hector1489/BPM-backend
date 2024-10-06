@@ -15,6 +15,7 @@ const { getAccionCorrectivas } = require('./models/accionCorrectivas.dao');
 const { getQuestions } = require('./models/questions.dao');
 const { createDesviacion, getAllDesviaciones, updateDesviacion, deleteDesviacion, getDesviacionesByAuditor } = require('./models/Desviaciones.dao');
 const { listPhotos, uploadPhoto, getPhoto, deletePhoto } = require('./models/s3.dao');
+const { listPDFs, uploadPDF, getPDF, deletePDF } = require('../server/models/pdf.dao'); 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -276,6 +277,52 @@ app.get('/tabla-warnings', async (req, res) => {
   } catch (error) {
     console.error('Error al obtener los warnings:', error);
     res.status(500).json({ error: 'Error al obtener los warnings.' });
+  }
+});
+
+// Ruta para listar todos los PDFs
+app.get('/pdfs', async (req, res) => {
+  try {
+    const pdfs = await listPDFs();
+    res.json(pdfs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Ruta para subir un PDF
+app.post('/pdfs/upload', upload.single('file'), async (req, res) => {
+  try {
+    const file = req.file;
+    if (!file) {
+      return res.status(400).json({ message: 'Por favor, sube un archivo PDF' });
+    }
+    const uploadedPDF = await uploadPDF(file);
+    res.json(uploadedPDF);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Ruta para obtener un PDF por su clave
+app.get('/pdfs/:key', async (req, res) => {
+  try {
+    const key = req.params.key;
+    const pdf = await getPDF(key);
+    res.json(pdf);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Ruta para eliminar un PDF por su clave
+app.delete('/pdfs/:key', async (req, res) => {
+  try {
+    const key = req.params.key;
+    const result = await deletePDF(key);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 

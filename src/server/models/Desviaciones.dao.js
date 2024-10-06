@@ -150,6 +150,13 @@ const getAllDesviaciones = async () => {
   }
 };
 
+const formatDate = (date) => {
+  if (!date) return null;
+  const dateObj = new Date(date);
+  return isNaN(dateObj.getTime()) ? null : dateObj.toISOString().split('T')[0]; // Retorna la fecha en formato YYYY-MM-DD
+};
+
+
 const updateDesviacion = async (id, desviacionData) => {
   const {
     numeroRequerimiento,

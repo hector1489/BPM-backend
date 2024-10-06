@@ -20,6 +20,9 @@ const listPDFs = async () => {
 
   try {
     const data = await s3.send(new ListObjectsV2Command(params));
+    if (!data.Contents || data.Contents.length === 0) {
+      throw new Error('No se encontraron PDFs en el bucket.');
+    }
 
     const pdfs = await Promise.all(
       data.Contents.map(async (item) => {
@@ -36,11 +39,16 @@ const listPDFs = async () => {
 
     return pdfs;
   } catch (error) {
+    console.error('Error al listar los PDFs:', error.message);
     throw new Error(`Error al listar los PDFs: ${error.message}`);
   }
 };
 
 const uploadPDF = async (file) => {
+  if (!file || !file.buffer) {
+    throw new Error('Archivo no válido para subir.');
+  }
+
   const key = `pdfs/${uuidv4()}_${file.originalname}`;
   const params = {
     Bucket: BUCKET_NAME,
@@ -62,19 +70,22 @@ const uploadPDF = async (file) => {
       url,
     };
   } catch (error) {
+    console.error('Error al subir el PDF:', error.message);
     throw new Error(`Error al subir el PDF: ${error.message}`);
   }
 };
 
-
 const getPDF = async (key) => {
+  if (!key) {
+    throw new Error('La clave del PDF es obligatoria.');
+  }
+
   const params = {
     Bucket: BUCKET_NAME,
     Key: key,
   };
 
   try {
-
     const url = await getSignedUrl(s3, new GetObjectCommand(params), { expiresIn: 3600 });
 
     return {
@@ -82,11 +93,16 @@ const getPDF = async (key) => {
       url,
     };
   } catch (error) {
+    console.error(`Error al obtener el PDF con la clave ${key}:`, error.message);
     throw new Error(`Error al obtener el PDF: ${error.message}`);
   }
 };
 
 const deletePDF = async (key) => {
+  if (!key) {
+    throw new Error('La clave del PDF es obligatoria para eliminar.');
+  }
+
   const params = {
     Bucket: BUCKET_NAME,
     Key: key,
@@ -97,7 +113,7 @@ const deletePDF = async (key) => {
     console.log('PDF eliminado del bucket:', key);
     return { message: 'PDF eliminado correctamente', key };
   } catch (error) {
-    console.error(`Error al eliminar el PDF con key: ${key}`, error.message);
+    console.error(`Error al eliminar el PDF con clave ${key}:`, error.message);
     throw new Error(`Error al eliminar el PDF: ${error.message}`);
   }
 };

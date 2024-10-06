@@ -173,12 +173,38 @@ const updateDesviacion = async (id, desviacionData) => {
     authToken
   } = desviacionData;
 
-  const fechaRecepcion = moment(fechaRecepcionSolicitud, 'D/M/YYYY').format('YYYY-MM-DD');
-  const fechaSolucion = moment(fechaSolucionProgramada, 'D/M/YYYY').format('YYYY-MM-DD');
-  const fechaCambio = moment(fechaCambioEstado, 'D/M/YYYY').format('YYYY-MM-DD');
-  const fechaModificacion = moment(fechaUltimaModificacion, 'D/M/YYYY').format('YYYY-MM-DD');
+  // Validamos y formateamos las fechas
+  const fechaRecepcion = formatDate(fechaRecepcionSolicitud);
+  const fechaSolucion = formatDate(fechaSolucionProgramada);
+  const fechaCambio = formatDate(fechaCambioEstado);
+  const fechaModificacion = formatDate(fechaUltimaModificacion);
+
+  // Creamos un objeto con los valores seguros
+  const safeValues = {
+    numeroRequerimiento: handleEmptyField(numeroRequerimiento),
+    preguntasAuditadas: handleEmptyField(preguntasAuditadas),
+    desviacionOCriterio: handleEmptyField(desviacionOCriterio),
+    tipoDeAccion: handleEmptyField(tipoDeAccion),
+    responsableProblema: handleEmptyField(responsableProblema),
+    local: handleEmptyField(local),
+    criticidad: handleEmptyField(criticidad),
+    accionesCorrectivas: handleEmptyField(accionesCorrectivas),
+    estado: handleEmptyField(estado),
+    contactoClientes: handleEmptyField(contactoClientes),
+    evidenciaFotografica: handleEmptyField(evidenciaFotografica),
+    detalleFoto: handleEmptyField(detalleFoto),
+    auditor: handleEmptyField(auditor),
+    correo: handleEmptyField(correo),
+    authToken: handleEmptyField(authToken),
+    fechaRecepcion,
+    fechaSolucion,
+    fechaCambio,
+    fechaModificacion
+  };
 
   try {
+
+    // Ejecutamos la actualización en la base de datos
     await db(
       `UPDATE desviaciones SET 
         numero_requerimiento = $1,
@@ -202,29 +228,30 @@ const updateDesviacion = async (id, desviacionData) => {
         auth_token = $19
       WHERE id = $20`,
       [
-        numeroRequerimiento,
-        preguntasAuditadas,
-        desviacionOCriterio,
-        tipoDeAccion,
-        responsableProblema,
-        local,
-        criticidad,
-        accionesCorrectivas,
-        fechaRecepcion,
-        fechaSolucion,
-        estado,
-        fechaCambio,
-        contactoClientes,
-        evidenciaFotografica,
-        detalleFoto,
-        auditor,
-        correo,
-        fechaModificacion,
-        authToken,
+        safeValues.numeroRequerimiento,
+        safeValues.preguntasAuditadas,
+        safeValues.desviacionOCriterio,
+        safeValues.tipoDeAccion,
+        safeValues.responsableProblema,
+        safeValues.local,
+        safeValues.criticidad,
+        safeValues.accionesCorrectivas,
+        safeValues.fechaRecepcion,
+        safeValues.fechaSolucion,
+        safeValues.estado,
+        safeValues.fechaCambio,
+        safeValues.contactoClientes,
+        safeValues.evidenciaFotografica,
+        safeValues.detalleFoto,
+        safeValues.auditor,
+        safeValues.correo,
+        safeValues.fechaModificacion,
+        safeValues.authToken,
         id
       ]
     );
   } catch (error) {
+    console.error('Error al actualizar la desviación:', error.message, 'Datos:', safeValues);
     throw new Error('Error al actualizar la desviación en la base de datos');
   }
 };

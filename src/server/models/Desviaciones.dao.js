@@ -156,7 +156,6 @@ const formatDate = (date) => {
   return isNaN(dateObj.getTime()) ? null : dateObj.toISOString().split('T')[0]; // Retorna la fecha en formato YYYY-MM-DD
 };
 
-
 const updateDesviacion = async (id, desviacionData) => {
   const {
     numeroRequerimiento,
@@ -257,6 +256,35 @@ const updateDesviacion = async (id, desviacionData) => {
         id
       ]
     );
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: safeValues.correo.trim() !== '' ? safeValues.correo : 'fungilydev@gmail.com',
+      subject: 'Actualización de Desviación - BPM AUDITORIAS',
+      text: `La desviación con el número de requerimiento: ${safeValues.numeroRequerimiento} ha sido actualizada.
+      
+      USUARIO: ${safeValues.auditor}
+
+      Nuevos detalles de la desviación:
+      - Preguntas Auditadas: ${safeValues.preguntasAuditadas}
+      - Desviación o Criterio: ${safeValues.desviacionOCriterio}
+      - Tipo de Acción: ${safeValues.tipoDeAccion}
+      - Responsable del Problema: ${safeValues.responsableProblema}
+      - Local: ${safeValues.local}
+      - Criticidad: ${safeValues.criticidad}
+      - Fecha de Recepción: ${safeValues.fechaRecepcion}
+      - Fecha de Solución Programada: ${safeValues.fechaSolucion}
+      - Estado: ${safeValues.estado}
+      - Contacto con Clientes: ${safeValues.contactoClientes}
+      
+      Por favor, revisa el sistema para más detalles.`,
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('Correo de actualización enviado exitosamente.');
+
+
+
   } catch (error) {
     console.error('Error al actualizar la desviación:', error.message, 'Datos:', safeValues);
     throw new Error('Error al actualizar la desviación en la base de datos');

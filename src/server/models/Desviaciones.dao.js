@@ -1,7 +1,7 @@
 const db = require('../database/db');
 const moment = require('moment');
 const nodemailer = require('nodemailer');
-const sendEmail = require('./sendEmail')
+
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -15,121 +15,111 @@ const handleEmptyField = (value) => {
   return value && value.trim() !== '' ? value : 'N/A';
 };
 
-const createDesviacion = async (desviacionesData) => {
+
+const createDesviacion = async (desviacionData) => {
+  const {
+    numeroRequerimiento,
+    preguntasAuditadas,
+    desviacionOCriterio,
+    tipoDeAccion,
+    responsableProblema,
+    local,
+    criticidad,
+    accionesCorrectivas,
+    fechaRecepcionSolicitud,
+    fechaSolucionProgramada,
+    estado,
+    fechaCambioEstado,
+    contactoClientes,
+    evidenciaFotografica,
+    detalleFoto,
+    auditor,
+    correo,
+    fechaUltimaModificacion,
+    authToken
+  } = desviacionData;
+
+  const formatDate = (dateString) => {
+    const formattedDate = moment(dateString, 'D/M/YYYY', true);
+    return formattedDate.isValid() ? formattedDate.format('YYYY-MM-DD') : null;
+  };
+
+  const safeValues = {
+    numeroRequerimiento: handleEmptyField(numeroRequerimiento),
+    preguntasAuditadas: handleEmptyField(preguntasAuditadas),
+    desviacionOCriterio: handleEmptyField(desviacionOCriterio),
+    tipoDeAccion: handleEmptyField(tipoDeAccion),
+    responsableProblema: handleEmptyField(responsableProblema),
+    local: handleEmptyField(local),
+    criticidad: handleEmptyField(criticidad),
+    accionesCorrectivas: handleEmptyField(accionesCorrectivas),
+    fechaRecepcion: formatDate(fechaRecepcionSolicitud),
+    fechaSolucion: formatDate(fechaSolucionProgramada),
+    estado: handleEmptyField(estado),
+    fechaCambio: formatDate(fechaCambioEstado),
+    contactoClientes: handleEmptyField(contactoClientes),
+    evidenciaFotografica: handleEmptyField(evidenciaFotografica),
+    detalleFoto: handleEmptyField(detalleFoto),
+    auditor: handleEmptyField(auditor),
+    correo: handleEmptyField(correo),
+    fechaModificacion: formatDate(fechaUltimaModificacion),
+    authToken: authToken || 'N/A'
+  };
 
   try {
-    console.log("Iniciando procesamiento de desviaciones...");
+    await db(
+      `INSERT INTO desviaciones (
+        numero_requerimiento, 
+        preguntas_auditadas, 
+        desviacion_o_criterio, 
+        tipo_de_accion, 
+        responsable_problema, 
+        local, 
+        criticidad, 
+        acciones_correctivas, 
+        fecha_recepcion_solicitud, 
+        fecha_solucion_programada, 
+        estado, 
+        fecha_cambio_estado, 
+        contacto_clientes, 
+        evidencia_fotografica, 
+        detalle_foto, 
+        auditor, 
+        correo, 
+        fecha_ultima_modificacion,
+        auth_token
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
+      [
+        safeValues.numeroRequerimiento,
+        safeValues.preguntasAuditadas,
+        safeValues.desviacionOCriterio,
+        safeValues.tipoDeAccion,
+        safeValues.responsableProblema,
+        safeValues.local,
+        safeValues.criticidad,
+        safeValues.accionesCorrectivas,
+        safeValues.fechaRecepcion,
+        safeValues.fechaSolucion,
+        safeValues.estado,
+        safeValues.fechaCambio,
+        safeValues.contactoClientes,
+        safeValues.evidenciaFotografica,
+        safeValues.detalleFoto,
+        safeValues.auditor,
+        safeValues.correo,
+        safeValues.fechaModificacion,
+        safeValues.authToken
+      ]
+    );
 
-    const formatDate = (dateString) => {
-      const formattedDate = moment(dateString, 'D/M/YYYY', true);
-      console.log(`Formato de fecha recibido: ${dateString}, formateado a: ${formattedDate.format('YYYY-MM-DD')}`);
-      return formattedDate.isValid() ? formattedDate.format('YYYY-MM-DD') : null;
-    };
-
-    let emailBody = `Se han creado las siguientes Incidencias:\n\n`;
-
-    const promises = desviacionesData.map(async (desviacionData, index) => {
-      console.log(`Procesando desviación ${index + 1} de ${desviacionesData.length}:`, desviacionData);
-
-      const {
-        numeroRequerimiento,
-        preguntasAuditadas,
-        desviacionOCriterio,
-        tipoDeAccion,
-        responsableProblema,
-        local,
-        criticidad,
-        accionesCorrectivas,
-        fechaRecepcionSolicitud,
-        fechaSolucionProgramada,
-        estado,
-        fechaCambioEstado,
-        contactoClientes,
-        evidenciaFotografica,
-        detalleFoto,
-        auditor,
-        email,
-        fechaUltimaModificacion,
-        authToken
-      } = desviacionData;
-
-      const safeValues = {
-        numeroRequerimiento: handleEmptyField(numeroRequerimiento),
-        preguntasAuditadas: handleEmptyField(preguntasAuditadas),
-        desviacionOCriterio: handleEmptyField(desviacionOCriterio),
-        tipoDeAccion: handleEmptyField(tipoDeAccion),
-        responsableProblema: handleEmptyField(responsableProblema),
-        local: handleEmptyField(local),
-        criticidad: handleEmptyField(criticidad),
-        accionesCorrectivas: handleEmptyField(accionesCorrectivas),
-        fechaRecepcion: formatDate(fechaRecepcionSolicitud),
-        fechaSolucion: formatDate(fechaSolucionProgramada),
-        estado: handleEmptyField(estado),
-        fechaCambio: formatDate(fechaCambioEstado),
-        contactoClientes: handleEmptyField(contactoClientes),
-        evidenciaFotografica: handleEmptyField(evidenciaFotografica),
-        detalleFoto: handleEmptyField(detalleFoto),
-        auditor: handleEmptyField(auditor),
-        email: handleEmptyField(email),
-        fechaModificacion: formatDate(fechaUltimaModificacion),
-        authToken: authToken || 'N/A'
-      };
-
-      console.log(`Valores preparados para la inserción en la base de datos:`, safeValues);
-
-      try {
-        await db(
-          `INSERT INTO desviaciones (
-            numero_requerimiento, 
-            preguntas_auditadas, 
-            desviacion_o_criterio, 
-            tipo_de_accion, 
-            responsable_problema, 
-            local, 
-            criticidad, 
-            acciones_correctivas, 
-            fecha_recepcion_solicitud, 
-            fecha_solucion_programada, 
-            estado, 
-            fecha_cambio_estado, 
-            contacto_clientes, 
-            evidencia_fotografica, 
-            detalle_foto, 
-            auditor, 
-            email, 
-            fecha_ultima_modificacion,
-            auth_token
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
-          [
-            safeValues.numeroRequerimiento,
-            safeValues.preguntasAuditadas,
-            safeValues.desviacionOCriterio,
-            safeValues.tipoDeAccion,
-            safeValues.responsableProblema,
-            safeValues.local,
-            safeValues.criticidad,
-            safeValues.accionesCorrectivas,
-            safeValues.fechaRecepcion,
-            safeValues.fechaSolucion,
-            safeValues.estado,
-            safeValues.fechaCambio,
-            safeValues.contactoClientes,
-            safeValues.evidenciaFotografica,
-            safeValues.detalleFoto,
-            safeValues.auditor,
-            safeValues.email,
-            safeValues.fechaModificacion,
-            safeValues.authToken
-          ]
-        );
-        console.log(`Desviación ${index + 1} insertada correctamente en la base de datos.`);
-      } catch (error) {
-        console.error(`Error al insertar la desviación ${index + 1}:`, error.message);
-        throw error;
-      }
-
-      emailBody += `
-      Incidencia Número: ${safeValues.numeroRequerimiento}
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: safeValues.correo.trim() !== '' ? safeValues.correo : 'fungilydev@gmail.com',
+      subject: 'BPM AUDITORIAS',
+      text: `Se ha creado una nueva Incidencia con el número de requerimiento: ${safeValues.numeroRequerimiento}.
+      
+      USUARIO: ${safeValues.auditor}
+      Detalles de la desviación:
       - Preguntas Auditadas: ${safeValues.preguntasAuditadas}
       - Desviación o Criterio: ${safeValues.desviacionOCriterio}
       - Tipo de Acción: ${safeValues.tipoDeAccion}
@@ -140,27 +130,17 @@ const createDesviacion = async (desviacionesData) => {
       - Fecha de Solución Programada: ${safeValues.fechaSolucion}
       - Estado: ${safeValues.estado}
       - Contacto con Clientes: ${safeValues.contactoClientes}
-      \n`;
-    });
+      
+      Por favor, revisa el sistema para más detalles.`,
+    };
 
-    await Promise.all(promises);
+    await transporter.sendMail(mailOptions);
+    console.log('Correo enviado exitosamente.');
 
-    console.log("Todas las desviaciones se procesaron correctamente.");
-
-    if (emailBody.trim() !== '') {
-      console.log("Enviando correo con las incidencias creadas...");
-      await sendEmail('destinatario@correo.com', 'BPM AUDITORIAS - Nuevas Incidencias', emailBody);
-      console.log("Correo enviado.");
-    }
-
-    return { success: true };
   } catch (error) {
-    console.error('Error al procesar las desviaciones:', error.message);
-    throw new Error('Error al guardar las desviaciones');
+    console.error('Error al almacenar los datos en la base de datos o enviar el correo:', error.message);
   }
 };
-
-
 
 const getAllDesviaciones = async () => {
   try {

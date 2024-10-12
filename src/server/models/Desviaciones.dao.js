@@ -15,14 +15,10 @@ const handleEmptyField = (value) => {
   return value && value.trim() !== '' ? value : 'N/A';
 };
 
-
 const createDesviacion = async (desviacionesData) => {
-  const client = await db.connect();
-  console.log("Conexión a la base de datos establecida");
 
   try {
-    await client.query('BEGIN');
-    console.log("Transacción iniciada");
+    console.log("Iniciando procesamiento de desviaciones...");
 
     const formatDate = (dateString) => {
       const formattedDate = moment(dateString, 'D/M/YYYY', true);
@@ -82,7 +78,7 @@ const createDesviacion = async (desviacionesData) => {
       console.log(`Valores preparados para la inserción en la base de datos:`, safeValues);
 
       try {
-        await client.query(
+        await db(
           `INSERT INTO desviaciones (
             numero_requerimiento, 
             preguntas_auditadas, 
@@ -157,19 +153,13 @@ const createDesviacion = async (desviacionesData) => {
       console.log("Correo enviado.");
     }
 
-    await client.query('COMMIT');
-    console.log("Transacción confirmada");
-
     return { success: true };
   } catch (error) {
-    await client.query('ROLLBACK');
-    console.error('Error al procesar las desviaciones, se hizo rollback:', error.message);
+    console.error('Error al procesar las desviaciones:', error.message);
     throw new Error('Error al guardar las desviaciones');
-  } finally {
-    client.release();
-    console.log("Conexión a la base de datos liberada");
   }
 };
+
 
 
 const getAllDesviaciones = async () => {

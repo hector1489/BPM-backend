@@ -15,104 +15,122 @@ const handleEmptyField = (value) => {
   return value && value.trim() !== '' ? value : 'N/A';
 };
 
+
 const createDesviacion = async (desviacionesData) => {
-  const formatDate = (dateString) => {
-    const formattedDate = moment(dateString, 'D/M/YYYY', true);
-    return formattedDate.isValid() ? formattedDate.format('YYYY-MM-DD') : null;
-  };
+  const client = await db.connect();
+  console.log("Conexión a la base de datos establecida");
 
-  let emailBody = `Se han creado las siguientes Incidencias:\n\n`;
+  try {
+    await client.query('BEGIN');
+    console.log("Transacción iniciada");
 
-  const promises = desviacionesData.map(async (desviacionData) => {
-    const {
-      numeroRequerimiento,
-      preguntasAuditadas,
-      desviacionOCriterio,
-      tipoDeAccion,
-      responsableProblema,
-      local,
-      criticidad,
-      accionesCorrectivas,
-      fechaRecepcionSolicitud,
-      fechaSolucionProgramada,
-      estado,
-      fechaCambioEstado,
-      contactoClientes,
-      evidenciaFotografica,
-      detalleFoto,
-      auditor,
-      correo,
-      fechaUltimaModificacion,
-      authToken
-    } = desviacionData;
-
-    const safeValues = {
-      numeroRequerimiento: handleEmptyField(numeroRequerimiento),
-      preguntasAuditadas: handleEmptyField(preguntasAuditadas),
-      desviacionOCriterio: handleEmptyField(desviacionOCriterio),
-      tipoDeAccion: handleEmptyField(tipoDeAccion),
-      responsableProblema: handleEmptyField(responsableProblema),
-      local: handleEmptyField(local),
-      criticidad: handleEmptyField(criticidad),
-      accionesCorrectivas: handleEmptyField(accionesCorrectivas),
-      fechaRecepcion: formatDate(fechaRecepcionSolicitud),
-      fechaSolucion: formatDate(fechaSolucionProgramada),
-      estado: handleEmptyField(estado),
-      fechaCambio: formatDate(fechaCambioEstado),
-      contactoClientes: handleEmptyField(contactoClientes),
-      evidenciaFotografica: handleEmptyField(evidenciaFotografica),
-      detalleFoto: handleEmptyField(detalleFoto),
-      auditor: handleEmptyField(auditor),
-      correo: handleEmptyField(correo),
-      fechaModificacion: formatDate(fechaUltimaModificacion),
-      authToken: authToken || 'N/A'
+    const formatDate = (dateString) => {
+      const formattedDate = moment(dateString, 'D/M/YYYY', true);
+      console.log(`Formato de fecha recibido: ${dateString}, formateado a: ${formattedDate.format('YYYY-MM-DD')}`);
+      return formattedDate.isValid() ? formattedDate.format('YYYY-MM-DD') : null;
     };
 
-    try {
-      await db(
-        `INSERT INTO desviaciones (
-          numero_requerimiento, 
-          preguntas_auditadas, 
-          desviacion_o_criterio, 
-          tipo_de_accion, 
-          responsable_problema, 
-          local, 
-          criticidad, 
-          acciones_correctivas, 
-          fecha_recepcion_solicitud, 
-          fecha_solucion_programada, 
-          estado, 
-          fecha_cambio_estado, 
-          contacto_clientes, 
-          evidencia_fotografica, 
-          detalle_foto, 
-          auditor, 
-          correo, 
-          fecha_ultima_modificacion,
-          auth_token
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
-        [
-          safeValues.numeroRequerimiento,
-          safeValues.preguntasAuditadas,
-          safeValues.desviacionOCriterio,
-          safeValues.tipoDeAccion,
-          safeValues.responsableProblema,
-          safeValues.local,
-          safeValues.criticidad,
-          safeValues.accionesCorrectivas,
-          safeValues.fechaRecepcion,
-          safeValues.fechaSolucion,
-          safeValues.estado,
-          safeValues.fechaCambio,
-          safeValues.contactoClientes,
-          safeValues.evidenciaFotografica,
-          safeValues.detalleFoto,
-          safeValues.auditor,
-          safeValues.correo,
-          safeValues.fechaModificacion,
-          safeValues.authToken
-        ]
-      );
+    let emailBody = `Se han creado las siguientes Incidencias:\n\n`;
+
+    const promises = desviacionesData.map(async (desviacionData, index) => {
+      console.log(`Procesando desviación ${index + 1} de ${desviacionesData.length}:`, desviacionData);
+
+      const {
+        numeroRequerimiento,
+        preguntasAuditadas,
+        desviacionOCriterio,
+        tipoDeAccion,
+        responsableProblema,
+        local,
+        criticidad,
+        accionesCorrectivas,
+        fechaRecepcionSolicitud,
+        fechaSolucionProgramada,
+        estado,
+        fechaCambioEstado,
+        contactoClientes,
+        evidenciaFotografica,
+        detalleFoto,
+        auditor,
+        email,
+        fechaUltimaModificacion,
+        authToken
+      } = desviacionData;
+
+      const safeValues = {
+        numeroRequerimiento: handleEmptyField(numeroRequerimiento),
+        preguntasAuditadas: handleEmptyField(preguntasAuditadas),
+        desviacionOCriterio: handleEmptyField(desviacionOCriterio),
+        tipoDeAccion: handleEmptyField(tipoDeAccion),
+        responsableProblema: handleEmptyField(responsableProblema),
+        local: handleEmptyField(local),
+        criticidad: handleEmptyField(criticidad),
+        accionesCorrectivas: handleEmptyField(accionesCorrectivas),
+        fechaRecepcion: formatDate(fechaRecepcionSolicitud),
+        fechaSolucion: formatDate(fechaSolucionProgramada),
+        estado: handleEmptyField(estado),
+        fechaCambio: formatDate(fechaCambioEstado),
+        contactoClientes: handleEmptyField(contactoClientes),
+        evidenciaFotografica: handleEmptyField(evidenciaFotografica),
+        detalleFoto: handleEmptyField(detalleFoto),
+        auditor: handleEmptyField(auditor),
+        email: handleEmptyField(email),
+        fechaModificacion: formatDate(fechaUltimaModificacion),
+        authToken: authToken || 'N/A'
+      };
+
+      console.log(`Valores preparados para la inserción en la base de datos:`, safeValues);
+
+      try {
+        await client.query(
+          `INSERT INTO desviaciones (
+            numero_requerimiento, 
+            preguntas_auditadas, 
+            desviacion_o_criterio, 
+            tipo_de_accion, 
+            responsable_problema, 
+            local, 
+            criticidad, 
+            acciones_correctivas, 
+            fecha_recepcion_solicitud, 
+            fecha_solucion_programada, 
+            estado, 
+            fecha_cambio_estado, 
+            contacto_clientes, 
+            evidencia_fotografica, 
+            detalle_foto, 
+            auditor, 
+            email, 
+            fecha_ultima_modificacion,
+            auth_token
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
+          [
+            safeValues.numeroRequerimiento,
+            safeValues.preguntasAuditadas,
+            safeValues.desviacionOCriterio,
+            safeValues.tipoDeAccion,
+            safeValues.responsableProblema,
+            safeValues.local,
+            safeValues.criticidad,
+            safeValues.accionesCorrectivas,
+            safeValues.fechaRecepcion,
+            safeValues.fechaSolucion,
+            safeValues.estado,
+            safeValues.fechaCambio,
+            safeValues.contactoClientes,
+            safeValues.evidenciaFotografica,
+            safeValues.detalleFoto,
+            safeValues.auditor,
+            safeValues.email,
+            safeValues.fechaModificacion,
+            safeValues.authToken
+          ]
+        );
+        console.log(`Desviación ${index + 1} insertada correctamente en la base de datos.`);
+      } catch (error) {
+        console.error(`Error al insertar la desviación ${index + 1}:`, error.message);
+        throw error;
+      }
 
       emailBody += `
       Incidencia Número: ${safeValues.numeroRequerimiento}
@@ -127,21 +145,30 @@ const createDesviacion = async (desviacionesData) => {
       - Estado: ${safeValues.estado}
       - Contacto con Clientes: ${safeValues.contactoClientes}
       \n`;
+    });
 
-      return { success: true, numeroRequerimiento: safeValues.numeroRequerimiento };
-    } catch (error) {
-      console.error(`Error al procesar la desviación con el número de requerimiento ${safeValues.numeroRequerimiento}:`, error.message);
-      return { success: false, numeroRequerimiento: safeValues.numeroRequerimiento, error: error.message };
+    await Promise.all(promises);
+
+    console.log("Todas las desviaciones se procesaron correctamente.");
+
+    if (emailBody.trim() !== '') {
+      console.log("Enviando correo con las incidencias creadas...");
+      await sendEmail('destinatario@correo.com', 'BPM AUDITORIAS - Nuevas Incidencias', emailBody);
+      console.log("Correo enviado.");
     }
-  });
 
-  const results = await Promise.all(promises);
+    await client.query('COMMIT');
+    console.log("Transacción confirmada");
 
-  if (emailBody.trim() !== '') {
-    await sendEmail('destinatario@correo.com', 'BPM AUDITORIAS - Nuevas Incidencias', emailBody);
+    return { success: true };
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error('Error al procesar las desviaciones, se hizo rollback:', error.message);
+    throw new Error('Error al guardar las desviaciones');
+  } finally {
+    client.release();
+    console.log("Conexión a la base de datos liberada");
   }
-
-  return results;
 };
 
 

@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 const sendEmail = async (toEmail, subject, text) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: toEmail || 'fungilydev@gmail.com',
+    to: toEmail || 'bbpmauditorias@gmail.com',
     subject: subject || 'BPM AUDITORIAS',
     text: text || 'Detalles de la desviación no proporcionados.'
   };

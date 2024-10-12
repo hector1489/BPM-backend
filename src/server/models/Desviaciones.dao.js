@@ -179,13 +179,11 @@ const updateDesviacion = async (id, desviacionData) => {
     authToken
   } = desviacionData;
 
-  // Validamos y formateamos las fechas
   const fechaRecepcion = formatDate(fechaRecepcionSolicitud);
   const fechaSolucion = formatDate(fechaSolucionProgramada);
   const fechaCambio = formatDate(fechaCambioEstado);
   const fechaModificacion = formatDate(fechaUltimaModificacion);
 
-  // Creamos un objeto con los valores seguros
   const safeValues = {
     numeroRequerimiento: handleEmptyField(numeroRequerimiento),
     preguntasAuditadas: handleEmptyField(preguntasAuditadas),
@@ -210,7 +208,6 @@ const updateDesviacion = async (id, desviacionData) => {
 
   try {
 
-    // Ejecutamos la actualización en la base de datos
     await db(
       `UPDATE desviaciones SET 
         numero_requerimiento = $1,

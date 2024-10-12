@@ -5,6 +5,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
+
 const verifyToken = require('./middleware/event.middleware');
 const { createUsuario, findUsuarios, findUsuarioByEmail, updateUsuario, deleteUsuario } = require('./models/Events.dao');
 const { verifyCredentials } = require('./models/Users.dao');
@@ -15,7 +16,7 @@ const { getAccionCorrectivas } = require('./models/accionCorrectivas.dao');
 const { getQuestions } = require('./models/questions.dao');
 const { createDesviacion, getAllDesviaciones, updateDesviacion, deleteDesviacion, getDesviacionesByAuditor } = require('./models/Desviaciones.dao');
 const { listPhotos, uploadPhoto, getPhoto, deletePhoto } = require('./models/s3.dao');
-const { listPDFs, uploadPDF, getPDF, deletePDF } = require('../server/models/pdf.dao'); 
+const { listPDFs, uploadPDF, getPDF, deletePDF } = require('../server/models/pdf.dao');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -325,7 +326,6 @@ app.delete('/pdfs/:key', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
 
 
 // Middleware para manejo de errores

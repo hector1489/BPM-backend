@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const userRoutes = require('./routes/userRoutes');
@@ -19,13 +18,13 @@ app.use(express.json());
 app.use(cors());
 
 //New Routes
-app.use('bpm/user', userRoutes);
-app.use('bpm/desviaciones', desviacionesRoutes);
-app.use('bpm/questions', questionsRoutes);
-app.use('bpm/photos', photosRoutes);
-app.use('bpm/details', detailsRoutes);
-app.use('bpm/warning', warningRoutes);
-app.use('bpm/pdf', pdfRoutes);
+app.use('/user', userRoutes);
+app.use('/desviaciones', desviacionesRoutes);
+app.use('/questions', questionsRoutes);
+app.use('/photos', photosRoutes);
+app.use('/details', detailsRoutes);
+app.use('/warning', warningRoutes);
+app.use('/pdf', pdfRoutes);
 
 
 // Middleware para manejo de errores

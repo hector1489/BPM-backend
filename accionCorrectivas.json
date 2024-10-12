@@ -1,6 +1,6 @@
 [
   {
-    "question": "Separaciones",
+    "question": "INF 1. Separaciones de áreas mínimas y condiciones de mantención de esta:",
     "action": [
       "SEPARAR VIRTUALMENTE AREA CALIENTE -AREA FRIA",
       "PONER PANELES DIVISORIOS",
@@ -9,7 +9,7 @@
     ]
   },
   {
-    "question": "Equipos",
+    "question": "INF 2. Equipos mínimos de cocción y frío (quemadores, refrigeradores, mantenedores, otros)",
     "action": [
       "REVISAR CAPACIDAD DE EQUIPAMIENTO-USAR COCINAS A GAS Y CAMARAS DE FRIO",
       "COTIZAR EQUIPOS DE COCCION Y ENFRIAMIENTO",
@@ -18,7 +18,7 @@
     ]
   },
   {
-    "question": "Servicios",
+    "question": "INF 3. Cuenta con servicios básicos (agua potable, desagües, ventilación, luminarias, vestuarios, otros)",
     "action": [
       "REALIZAR PLANILLA DE CONTROL DE CLORO",
       "INSTALACION DE DESAGUES",
@@ -29,7 +29,7 @@
     ]
   },
   {
-    "question": "Trazabilidad",
+    "question": "RL 4. Es factible realizar trazabilidad de producto",
     "action": [
       "REALIZAR CHARLA DEL CORRECTO LLENADO DE REGISTROS",
       "IMPLEMENTAR FORMATO ADECUADO DE TRAZABILIDAD",
@@ -38,7 +38,7 @@
     ]
   },
   {
-    "question": "Registros",
+    "question": "RL 5. Mantención de registros de control de proceso, 90 días",
     "action": [
       "REALIZAR CHARLA DE COMO COMPLETAR LOS REGISTROS",
       "DEFINIR LUGAR DE ALMACENAMIENTO  DE LOS REGISTROS",
@@ -47,7 +47,7 @@
     ]
   },
   {
-    "question": "Correctiva",
+    "question": "RL 6. Cuenta con registros de mantención correctiva de equipos",
     "action": [
       "REALIZAR PROGRAMA DE MANTENCIÓN PREVENTIVA",
       "GENERAR ORDENES DE TRABAJO",
@@ -56,7 +56,7 @@
     ]
   },
   {
-    "question": "Entrenamiento",
+    "question": "RL 7. Inducción y entrenamiento al personal, en calidad y medio ambiente (registros e interrogar al personal)",
     "action": [
       "REALIZAR INDUCCIÓN HOMBRE NIUEVO",
       "REALIZAR PROGRAMA DE CAPACITACIÓN",
@@ -65,7 +65,7 @@
     ]
   },
   {
-    "question": "Almacenamiento",
+    "question": "CQA 8. Almacenamiento de productos químicos según PH, con hojas de seguridad y EPP disponibles",
     "action": [
       "SOLICITAR CAPACITACION DE QUIMICOS A PROVEEDOR",
       "DEFINIR ESTANTERIAS PARA ORDENAR POR PH",
@@ -74,7 +74,7 @@
     ]
   },
   {
-    "question": "Rotulacion",
+    "question": "CQA 9. Rotulación correcta, indicando nombre producto y área de uso",
     "action": [
       "PEDIR A PROVEEDOR DE QUIMICOS ROTULACIÓN",
       "SOLICITAR CAPACITACIÓN SOBRE ROTULACIÓN A PROVEEDOR DE QUIMICOS",
@@ -83,7 +83,7 @@
     ]
   },
   {
-    "question": "Cantidad",
+    "question": "CQA 10. Productos químicos y utensilios de aseo en cantidad y limpieza adecuada",
     "action": [
       "COMPRAR UTENSILIOS DE ASEO POR COLORES PARA CADA AREA",
       "CAPACITAR AL PERSOSNAL SOBRE CONTAMINACIÓN CRUZADA",
@@ -92,7 +92,7 @@
     ]
   },
   {
-    "question": "Agua",
+    "question": "CA 11. Agua potable suministrada por empresa sanitaria u otra fuente autorizada, con registro sanitario (evidencia)",
     "action": [
       "MANTENER PLANILLA DE CONTROL DE CLORO",
       "ARCCHIVAR ANALISIS DE CONTROL DE AGUA POTABLE 409",
@@ -101,7 +101,7 @@
     ]
   },
   {
-    "question": "Utensilios",
+    "question": "CS 12. Aplicación de procedimiento de higiene de tablas, cuchillos y mesones",
     "action": [
       "REALIZAR CAPACITACIÓN PROCEDIMIENTO LIMPIESA Y SANITIZACIÓN",
       "LEVANTAR NO CONFORMIDAD POR INCUMPLIMIENTO",
@@ -111,7 +111,7 @@
     ]
   },
   {
-    "question": "Higiene-tablas",
+    "question": "CS 13. Limpieza y desinfección de equipos de proceso (máquina universal, juguera, amasadora, otros)",
     "action": [
       "REALIZAR CAPACITACIÓN PROCEDIMIENTO LIMPIESA Y SANITIZACIÓN",
       "LEVANTAR NO CONFORMIDAD POR INCUMPLIMIENTO",
@@ -121,17 +121,7 @@
     ]
   },
   {
-    "question": "Desinfeccion-equipos",
-    "action": [
-      "REALIZAR CAPACITACIÓN PROCEDIMIENTO LIMPIESA Y SANITIZACIÓN",
-      "LEVANTAR NO CONFORMIDAD POR INCUMPLIMIENTO",
-      "APLICAR CON FRECUENCIA DIARIA LUMINOMETRIA",
-      "REALIZAR CHECKLIST DE REVISIÓN DE EQUIPOS",
-      "PEDIR APOYO PRACTICO A PROVEEDOR DE QUIMICOS EN TEMAS DE LIMPIESA Y SANITIZACIÓN EQUIPOS"
-    ]
-  },
-  {
-    "question": "Desengrasado-equipos",
+    "question": "CS 14. Limpieza y desengrasado de equipos (cocina, horno, freidora, marmita, campana y otros)",
     "action": [
       "PEDIR A PROVEEDOR DE QUIMICOS PROCEDIMIENTO DE DESENGRASAMIENTO",
       "IMPLEMENTAR CUBA DE DESENGRASADO",
@@ -140,7 +130,7 @@
     ]
   },
   {
-    "question": "Desincrustacion-maquinas",
+    "question": "CS 15. Limpieza y desincrustación de máquinas de jugo, baño maría, vitrinas y hervidores (sin sarro)",
     "action": [
       "PEDIR A PROVEEDOR DE QUIMICOS PROCEDIMIENTO DE RETIRO DE SARRO",
       "APLICAR PROGRAMA DE HIGIENE CON FRECUENCIA DE LAVADO",
@@ -149,7 +139,7 @@
     ]
   },
   {
-    "question": "Limpieza-mesas",
+    "question": "CS 16. Higiene de mesas y sillas de comedor",
     "action": [
       "PEDIR A PROVEEDOR DE QUIMICOS PROCEDIMIENTO DE RETIRO DE SARRO",
       "APLICAR PROGRAMA DE HIGIENE CON FRECUENCIA DE LAVADO",
@@ -158,7 +148,7 @@
     ]
   },
   {
-    "question": "Higiene-programa",
+    "question": "TRA CS 17. Aplicacion y eficiencia del programa de higiene, publicado e implementado por áreas (Art. 41, 43, 44, 64, 69)",
     "action": [
       "PUBLICAR PROGRAMA DE HIGIENE",
       "CAPACITAR AL PERSONAL EN FRECUENCIA DE LIMPIEZA TERMINAL",
@@ -167,7 +157,7 @@
     ]
   },
   {
-    "question": "Alarma-Sanitaria",
+    "question": "CS 18. Aplicación de alarma sanitaria (equipo), durante la auditoría, con frecuencia y responsable definido (si aplica)",
     "action": [
       "REALIZARCHECKLIST DE ALARMA SANITARIA",
       "REALIZAR CHARLA DE RESPONSABILIDAD DE LA ALARMA SANITARIA",
@@ -176,7 +166,7 @@
     ]
   },
   {
-    "question": "cs-registro",
+    "question": "CS 19. Los registros generados son coherentes con lo especificado en el programa (Art. 69)",
     "action": [
       "REALIZAR REGISTRO DE MONITOREO DE LIMPIEZAS",
       "CAPACITAR A PERSONAL EN PROGRAMA DE HIGIENE",
@@ -185,7 +175,7 @@
     ]
   },
   {
-    "question": "cs-medidas",
+    "question": "CS 20. Se adoptan las medidas necesarias para evitar la contaminación de los equipos después de limpiarse y desinfectarse (Art. 42)",
     "action": [
       "REALIZAR LUMINOMETRIA",
       "CAPACITAR A PERSONAL EN TEMAS DE CONTAMINACIÓN CRUZADA",
@@ -194,11 +184,16 @@
     ]
   },
   {
-    "question": "Luminometro",
-    "action": []
+    "question": "LUM 21. Toma de muestra y uso de luminómetro",
+    "action": [
+      "REALIZAR LAVADO Y ENJUAGUE,",
+      "TOMAR NUEVAMENTE MUESTRA DE LUMINIMETRIA, ",
+      "REALIZAR CHARLA SOBRE LIMPIEZA",
+      "APLICAR PROCEDIMIENTO DE ASEO CASINO ( TODO ES UNA SOLA ACCION CORRECTIVA)"
+    ]
   },
   {
-    "question": "Contaminacion-Utensilios",
+    "question": "CC 22. Separación de utensilios por área, y separación alimentos (cocido - crudo - sucio, otros)",
     "action": [
       "REALIZAR CHARLA DE CONTAMINACIÓN CRUZADA",
       "DEFINIR ESTANDARIZACION TABLAS DE COLORES",
@@ -209,7 +204,7 @@
     ]
   },
   {
-    "question": "Ubicacion-Equipos",
+    "question": "CC 23. Ubicación de equipos y mobiliarios se mantienen correctamente (basureros, mesones, lavadero sanitizado)",
     "action": [
       "REALIZAR CHARLA DE CONTAMINACIÓN CRUZADA",
       "DEFINIR ESTANDARIZACION TABLAS DE COLORES",
@@ -220,7 +215,7 @@
     ]
   },
   {
-    "question": "Pulverizadores",
+    "question": "CSA 24. Pulverizadores de productos químicos separados de las materias primas-preparaciones en producción (Art. 50, 51)",
     "action": [
       "COMPRAR CANASTOS PARA ALMACENAR LOS P.Q",
       "INSTALAR REJILLAS PARA ALMACENAS",
@@ -229,7 +224,7 @@
     ]
   },
   {
-    "question": "Proteccion-MP",
+    "question": "CSA 25. Protección de materias primas, producto terminado y utensilios",
     "action": [
       "REALIZAR CAPACITACIÓN Y EVALUACION PROCEDIMIENTO CONTROL DE PLAGAS",
       "REALIZAR CHECKLIST DE PROTECCION ANTES DE APLICAR LA FUMIGACIÓN ",
@@ -238,7 +233,7 @@
     ]
   },
   {
-    "question": "producto-mp",
+    "question": "CSA 26. Consultar al personal por metodo de proteccion, previa a la aplicacion del control de plagas",
     "action": [
       "COMPRAR CANASTOS PARA ALMACENAR LOS P.Q",
       "INSTALAR REJILLAS PARA ALMACENAS",
@@ -247,7 +242,7 @@
     ]
   },
   {
-    "question": "Uniformes",
+    "question": "CSH 27. Uniforme completo de todos, limpio y en buen estado - Sin accesorios adicionales (reloj, joyas, celular, otros) (Art.56)",
     "action": [
       "REALIZAR CHECKLIST DE HIGIENE DE PERSONAL",
       "REALIZAR PLANILLA DE RECAMBIOS DE UNIFORMES",
@@ -256,7 +251,7 @@
     ]
   },
   {
-    "question": "Cubrepelo",
+    "question": "CSH 28. Cubre-pelo (gorro o cofia), mascarilla y guantes usados correctamente (Art.56)",
     "action": [
       "REALIZAR CHECKLIST DE HIGIENE DE PERSONAL",
       "REALIZAR PLANILLA DE RECAMBIOS DE UNIFORMES",
@@ -266,7 +261,7 @@
     ]
   },
   {
-    "question": "Lavado-Manos",
+    "question": "TRA CSH 29. Lavado y sanitizado correcto de manos y uñas",
     "action": [
       "REALIZARCHECKLIST DE ALARMA SANITARIA",
       "REALIZAR CHARLA DE TECNICA DE LAVADO DE MANOS",
@@ -275,7 +270,7 @@
     ]
   },
   {
-    "question": "Manos-Heridas",
+    "question": "CSH 30. Manos sin heridas desprotegidas, uñas cortas y sin esmalte",
     "action": [
       "REALIZAR CHECKLIST DE HIGIENE DE PERSONAL",
       "REALIZAR PLANILLA DE RECAMBIOS DE UNIFORMES",
@@ -285,7 +280,7 @@
     ]
   },
   {
-    "question": "Examenes",
+    "question": "TRA CSH 31. Exámenes de todos los manipuladores, ecónomos y administradores. Ausencia de malestares o infecciones (Art. 52, 53)",
     "action": [
       "REALIZAR PLANILLA DE SEGUIMIENTO CONTROL DE EXAMENES CON ALERTAS",
       "REALIZAR CAPACITACIÓN DE CONTROL DE SALUD (EXAMENES)",
@@ -294,7 +289,7 @@
     ]
   },
   {
-    "question": "csh-programa",
+    "question": "CSH 32. Existe un programa de higiene del personal y sus registros correspondientes. (Art. 55, 56, 60, 69)",
     "action": [
       "REALIZAR PLANILLA DE SEGUIMIENTO CONTROL DE EXAMENES CON ALERTAS",
       "REALIZAR CAPACITACIÓN DE CONTROL DE SALUD (EXAMENES)",
@@ -303,7 +298,7 @@
     ]
   },
   {
-    "question": "Barreras-Fisicas",
+    "question": "CP 33. Barreras físicas para ingreso de vectores y/o plagas (puertas, ventanas, grietas, desagües, otros)",
     "action": [
       "ALMACENAR REGISTROS DE CONTROL DE PLAGAS",
       "IMPLEMENTAR TRAMPAS UV",
@@ -313,7 +308,7 @@
     ]
   },
   {
-    "question": "Programa-Plagas",
+    "question": "CP 34. Revisar programa y evaluar eficacia y eficiencia (certificados 3 meses atrás e inspección visual) (Art. 47, 69)",
     "action": [
       "ALMACENAR REGISTROS DE CONTROL DE PLAGAS",
       "APLICAR AUDITORIA BPM",
@@ -321,7 +316,7 @@
     ]
   },
   {
-    "question": "cp-programa",
+    "question": "CP 35. La empresa a cargo del programa de aplicación de agentes químicos o biológicos para el control de plagas cuenta con Autorización sanitaria. (Art. 48)",
     "action": [
       "ALMACENAR RESOLUCION SANITARIA DE EMPRESA CONTROL DE PLAGAS",
       "ALMACENAR CROQUIS CEBADERO",
@@ -329,7 +324,7 @@
     ]
   },
   {
-    "question": "cp-desechos",
+    "question": "CP 36. Los desechos se disponen de forma de impedir el acceso y proliferación de plagas. (Art. 40)",
     "action": [
       "CONTAR CON BATEAS PARA ELIMINACIÓN DE DESECHOS",
       "CONTAR CON FRECUENCIA DE LABADO LOZA DONDE SE MANYIENE LA BATEA",
@@ -338,7 +333,7 @@
     ]
   },
   {
-    "question": "Lavamanos",
+    "question": "CIS 37. Lavamanos suficientes en áreas de manipulación, limpios, dispensador de papel y señalética publicada",
     "action": [
       "JEFE DE COCINA DEBE REALIZAR REVISION DIARIA DE INSUMOS PARA HIGIENE DE MANOS",
       "SOLICITAR A PROVEEDOR DE QUIMICOS REVISIÓN DE SEÑALETICAS PARA LAVAMANOS",
@@ -346,7 +341,7 @@
     ]
   },
   {
-    "questio": "Servicios-Higienicos",
+    "questio": "CIS 38. Servicios higiénicos y sala vestuario, en buenas condiciones, limpios, con agua caliente, jabón y papel",
     "action": [
       "PERSONAL DE ASEO REALIZAR CHECKLIST DE INSUMOS EN LOS BAÑOS",
       "IMPLEMENTAR MONITOREO DE ASEO CON FRECUENCIA",
@@ -354,7 +349,7 @@
     ]
   },
   {
-    "question": "Registro-Recepcion",
+    "question": "REC 39. Verificar registro recepción materias primas, inventario, ordenes de compra y guías de despacho (Art. 61, 69)",
     "action": [
       "ALMACENAR REGISTROS DE RECEPCION DE M.P",
       "ALMACENAR IREGISTROS DE FACTURAS Y GUIAS DE DESPACHO",
@@ -362,7 +357,7 @@
     ]
   },
   {
-    "question": "Balanza",
+    "question": "REC 40. Balanza en buen estado, limpia y utilizada frecuentemente",
     "action": [
       "REALIZAR VERIFICACIÓN DE BALANZAS",
       "IMPLEMENTAR CODIFICACIÓN",
@@ -371,14 +366,14 @@
     ]
   },
   {
-    "question": "Tiempo-Exposicion",
+    "question": "REC 41. Verificar tiempo de exposición de materias primas a Tª adecuada",
     "action": [
       "REALIZAR CHECKLIST DE CONTROL DE TEMPERATURAS DE EQUIPOS DE FRIO",
       "IMPLEMENTAR TECNOLOGIA DE SENSORES DE TEMPERATURA CON ALARMA"
     ]
   },
   {
-    "question": "materias-recepcion",
+    "question": "REC 42. Las materias primas utilizadas provienen de establecimientos autorizados y debidamente rotuladas y/o identificadas. (Art. 61, 96)",
     "action": [
       "ALMACENAR RESOLUCIONES SANOTARIAS DE LOS PROVEEDORES",
       "MANTENER FICHAS TECNICAS DE LAS M.PROVEEDORES",
@@ -387,7 +382,7 @@
     ]
   },
   {
-    "question": "prima-recepcion",
+    "question": "REC 43. Se cuenta con las especificaciones escritas para cada materia prima (condiciones de almacenamiento, duración, uso, etc.)",
     "action": [
       "ALMACENAR REGISTROS DE RECEPCION DE M.P",
       "ALMACENAR IREGISTROS DE FACTURAS Y GUIAS DE DESPACHO",
@@ -395,7 +390,7 @@
     ]
   },
   {
-    "question": "Practicas-Higienicas",
+    "question": "ALM 44. Verificar prácticas higiénicas en el trasvasije de envases - Evitar contacto directo entre diferentes tipos de carne (Art.62)",
     "action": [
       "REALIZAR IMPLEMENTACIÓN DE LAVADO DE WENCOS EN PROGAMA DE HIGIENE",
       "REALIZAR INSPECCIONES VISUALES DE  LA LIMIPEZA DE LOS ENVASES",
@@ -403,7 +398,7 @@
     ]
   },
   {
-    "question": "Identificacion-Areas",
+    "question": "ALM 45. Identificación de áreas y estantes, por familias de productos",
     "action": [
       "IMPLEMENTAR SISTEMA DE ROTULACION POR FAMILIA SEGUN REGLAMENTO SANOTARIO",
       "IMPLEMENTAR ORDEN POR ABECEDARIO",
@@ -413,7 +408,7 @@
     ]
   },
   {
-    "question": "Receptaculos",
+    "question": "ALM 46. Receptáculos (bandejas) suficientes, limpios y ordenados",
     "action": [
       "REALIZAR IMPLEMENTACIÓN DE LAVADO DE WENCOS EN PROGAMA DE HIGIENE",
       "REALIZAR INSPECCIONES VISUALES DE  LA LIMIPEZA DE LOS ENVASES",
@@ -421,7 +416,7 @@
     ]
   },
   {
-    "question": "Fifo-Fefo",
+    "question": "ALM 47. Cumplimiento del sistema FIFO o FEFO, según corresponda",
     "action": [
       "REALIZAR MANUAL DE ESPECIFICAIONES DE M.P",
       "REALIZAR CONTROL DE MUESTREOS NCH 44",
@@ -431,7 +426,7 @@
     ]
   },
   {
-    "question": "Productos-No-Conforme",
+    "question": "ALM 48. Productos No Conforme, manejo correcto (art. 105 DS977)",
     "action": [
       "IDENTIFICAR SECTOR DE PRODUCTO NO CONFORME",
       "REALIZAR RECLAMOS NO CONFORMES DE PRODUCTO",
@@ -440,14 +435,14 @@
     ]
   },
   {
-    "question": "Nivel-Piso",
+    "question": "ALM 49. Mantención de productos sobre nivel de piso",
     "action": [
       "REALIZAR CHARLA DE NO MANTENER PRODUCTOS EN EL PISO",
       "REALIZAR CHECKLIST REVISIÓN ALMACENAMIENTO CORRECTO DE ALIMENTOS NO A NIVEL DE PISO"
     ]
   },
   {
-    "question": "Separacion-Materias",
+    "question": "ALM 50. Separación materias primas, desechables, productos químicos",
     "action": [
       "CONTAR CON ESTANTERIAS SEPARADAS E IDENTIFICADAS",
       "LLEVAR UN CONTROL ESCRITO DE N.A, Y QUIMICOS",
@@ -456,7 +451,7 @@
     ]
   },
   {
-    "question": "Entrega-Produccion",
+    "question": "ALM 51. Verificar entrega correcta a la producción (verificación de cantidad, calidad y disponibilidad)",
     "action": [
       "REALIAR REGISTRO DE PEDIDOS A BODEGA",
       "REALIZAR REGISTRO DE PEDIDO A BODEGA ADICIONAL",
@@ -465,7 +460,7 @@
     ]
   },
   {
-    "question": "Descongelacion",
+    "question": "TRA PRE 52. Verificar descongelación en equipos de refrigeración, en agua corriendo sólo en caso de emergencias",
     "action": [
       "REALIZAR REGISTRO DE DESCONGELACIÓN",
       "ADICIONAR A CADA M.P ROTULACIÓN DE DESCONGELACIÓN",
@@ -474,7 +469,7 @@
     ]
   },
   {
-    "question": "Preelaborados",
+    "question": "PRE 53. Pre-elaborados en refrigeración, en envases originales sellados y apilados correctamente",
     "action": [
       "REALIZAR CHECKLIST CONTROL DE CALIDAD M.P PREELABORADOS",
       "MANTENER RORULACION ADECUADA",
@@ -483,7 +478,7 @@
     ]
   },
   {
-    "question": "Materias-Primas",
+    "question": "PRE 54. Materias primas ya procesadas en recipientes o envases lavables y tapadas",
     "action": [
       "MANTENER ROTULACION CON FECHAS DE ELABORACIÓN-VENCIMIENTO Y HORA",
       "APLICAR ALMACENAMIENTO SEGUN PRODUCTOS LISTOS.PREELABORADOS Y CRUDOS",
@@ -492,7 +487,7 @@
     ]
   },
   {
-    "question": "Separacion-Productos",
+    "question": "PRE 55. Se separan productos por tipo y/o riesgo de contaminación",
     "action": [
       "DEFINIR A TRAVES DE CARTELERÍA SEPARACIÓN UTENSILIOS, PRODUCTOS, TABLAS",
       "COMPRAR ATRILES PARA TABLAS, BARRAS IMANTADAS PARA UTENSILIOS, DEPOSITOS PLASTICOS PARA EPP",
@@ -501,7 +496,7 @@
     ]
   },
   {
-    "question": "Manitizado",
+    "question": "PRE 56. Sanitizado con concentración y tiempo correctos. Verificar registro si aplica",
     "action": [
       "SOLICITAR A PROVEEDOR DE QUIMICOS CINTAS DE MEDICIÓN PARA CONCENTRACIÓN",
       "IMPLEMENTAR REGISTROS DE CONTROL DE LAS CONCENTRACIONES",
@@ -510,7 +505,7 @@
     ]
   },
   {
-    "question": "Recepcion-Materias",
+    "question": "EL 57. Recepción y mantención de materias primas en envases limpios y protegidos",
     "action": [
       "CONTAR CON TAPAS PARA TODAS LAS GASTRONORM",
       "HACER CHARLA A PERSONAL SOBRE PROTEGER LOS ALIMENTOS",
@@ -519,7 +514,7 @@
     ]
   },
   {
-    "questio": "Orden-Limpieza",
+    "questio": "ELB 58. Orden, limpieza y T° correcta en todos los equipos de frío. Termómetro interno",
     "action": [
       "CONTAR CON TERMOGRAFOS EN CADA EQUIPO DE FRIO",
       "REALIZAR REGISTRO DE CONTROL DE T° CON CIERTA FRECUENCIA",
@@ -528,7 +523,7 @@
     ]
   },
   {
-    "question": "Productos-Transito",
+    "question": "ELB 59. Productos en tránsito y/o producto terminado, correctamente rotulado según tiempos definidos",
     "action": [
       "REALIZAR Y PUBLICAR TABLA DE PERECIBILIDAD",
       "COLOCAR ROTULACIÓN DE PRODUCTOS EN TRANSITO DEFINIR COLOR",
@@ -537,7 +532,7 @@
     ]
   },
   {
-    "question": "Pespetan-Temperaturas",
+    "question": "TRA ELB 60. Respetan las T° y los tiempos correctos de cocción y enfriamiento (fríos y calientes)",
     "action": [
       "COTIZAR SISTEMA DE SENSORES PARA PREPARACIONES  CONTROL DE TEMPERATURA",
       "CARTA DE AMONESTACIÓN PARA PERSONAL QUE NO CONTROLE T°",
@@ -546,7 +541,7 @@
     ]
   },
   {
-    "question": "Uso-Equipos-Frio",
+    "question": "ELB 61. Uso correcto de equipos de frío, elaboración y mantención",
     "action": [
       "LLEVAR REGISTROS DE CONTROL DE T° PARA MANTENEDORES-EQUIPOS DE FRIO",
       "IMPLEMENTAR TERMOCUPLAS PARA CONTROL COCCIÓN",
@@ -556,7 +551,7 @@
     ]
   },
   {
-    "question": "Sistema-Extraccion",
+    "question": "ELB 62. Sistema de extracción e inyección de aire, en correcto funcionamiento, limpio y con registro de limpieza de ducto",
     "action": [
       "INCLUIR EN PROGRAMA DE MANTENCIÓN DUCTOS",
       "COTIZAR EMPRESA QUE REALICE LI,PIEZA DE DUCTOS",
@@ -564,7 +559,7 @@
     ]
   },
   {
-    "question": "Estantes",
+    "question": "ELB 63. Estantes sin óxido, sin sobrecarga y ordenados (materias primas y especies - desechables - utensilios)",
     "action": [
       "IMPLEMENTAR EN PROGRAMA DE HIIGIENE LIMPIEZA DE ESTANTERIAS",
       "DEFINIR CANTIDAD DE PESO POR REPISA SEGÚN AREA PREVENCIÓN",
@@ -573,7 +568,7 @@
     ]
   },
   {
-    "question": "Especieros",
+    "question": "ELB 64. Especieros limpios, rotulados, tapados y ordenados. Envases de material lavable",
     "action": [
       "COMPRAR ESPECIEROS PARA ORDENAR",
       "MANTENER ROTULACIÓN SEGUN TABLA DE PERECIBILIDAD",
@@ -581,7 +576,7 @@
     ]
   },
   {
-    "question": "Montajes-Rapidos",
+    "question": "ELB 65. Montajes rápidos, por lote de producto y mice and place completa (mantención cadena frío)",
     "action": [
       "COTIZAR SISTEMA DE SENSORES PARA PREPARACIONES",
       "CARTA DE AMONESTACIÓN PARA PERSONAL QUE NO CONTROLE T°",
@@ -590,7 +585,7 @@
     ]
   },
   {
-    "question": "Tiempo-Elaboracion-Consumo",
+    "question": "TRA ELB 66. Tiempo entre elaboración y consumo",
     "action": [
       "COTIZAR SISTEMA DE SENSORES PARA PREPARACIONES  CONTROL DE TIEMPO",
       "CARTA DE AMONESTACIÓN PARA PERSONAL QUE NO CONTROLE TIEMPOS",
@@ -599,7 +594,7 @@
     ]
   },
   {
-    "question": "control-tiempo-temperatura",
+    "question": "TRA MA 67. Control de tiempo y Tº del equipo, al inicio y término de la mantención en frío o caliente",
     "action": [
       "COTIZAR SISTEMA DE SENSORES PARA PREPARACIONES  CONTROL DE TIEMPO  Y TEMPERATURA",
       "CARTA DE AMONESTACIÓN PARA PERSONAL QUE NO CONTROLE TIEMPOS Y T°",
@@ -608,7 +603,7 @@
     ]
   },
   {
-    "question": "Traslado-Alimentos",
+    "question": "TRA TPO 68. Traslado de alimentos cumpliendo; protección, rotulación, estiba y registros al inicio y término",
     "action": [
       "COTIZAR SISTEMA DE SENSORES PARA PREPARACIONES  CONTROL DE TIEMPO  Y TEMPERATURA",
       "REALIZAR CHECKLIST DE CONDICIONES DE TRASLADO DE ALIMENTOS",
@@ -617,7 +612,7 @@
     ]
   },
   {
-    "question": "Observacion-Vehiculo",
+    "question": "TPO 69. Vehículo cerrado, limpio y en correctas condiciones. Con autorización sanitaria",
     "action": [
       "COTIZAR SISTEMA DE SENSORES PARA PREPARACIONES  CONTROL DE TIEMPO  Y TEMPERATURA",
       "REALIZAR CHECKLIST DE CONDICIONES DE TRASLADO DE ALIMENTOS",
@@ -627,7 +622,7 @@
     ]
   },
   {
-    "question": "Mantenimiento-Baño-Maria",
+    "question": "SER 70. Verificar mantención en baño maría caliente o mantenedor eléctrico",
     "action": [
       "REALIZAR PROGRAMA DE MANTENCIÓN PREVENTIVA",
       "REALIZAR LISTADO DE EQUIPOS CRITICOS",
@@ -636,7 +631,7 @@
     ]
   },
   {
-    "question": "Variedad-Autoservicio",
+    "question": "SER 71. Variedad de alternativas instaladas en línea autoservicio, según menú (fondos, ensaladas y postres, otros",
     "action": [
       "REVISAR REQUISICIONES EN DEGUSTACIÓN",
       "REALIZAR PLANILLA DE SEGUIMIENTO CUMPLIMIENTO DE MINUTA",
@@ -649,7 +644,7 @@
     ]
   },
   {
-    "question": "Equipos-Suficientes",
+    "question": "TRA SER 72. Equipos suficientes para la correcta mantención de productos calientes y fríos",
     "action": [
       "REALIZAR PROGRAMA DE MANTENCIÓN PREVENTIVA",
       "REALIZAR LISTADO DE EQUIPOS CRITICOS",
@@ -657,7 +652,7 @@
     ]
   },
   {
-    "question": "Reposicion-Preparaciones",
+    "question": "SER 73. Reposición continua de las preparaciones frías y calientes",
     "action": [
       "DETERMINACIÓN DE RENDIMIENTO PERSONAL",
       "PUBLICAR FUNCIONES DEL PERSONAL",
@@ -665,7 +660,7 @@
     ]
   },
   {
-    "question": "Observacion-Vajilla",
+    "question": "SER 74. Vajilla, bandejas y cubiertos en cantidad correcta, limpios y secos",
     "action": [
       "REALIZAR CONTROL DE INVENTARIO SEMANAL",
       "CUMPLIR CON % DE 1.6 SOBRE LA BASE DE LOS COMENSALES",
@@ -675,7 +670,7 @@
     ]
   },
   {
-    "question": "Desconche",
+    "question": "LVA 75. Desconche de ollas y vajilla limpio, ordenado, separado lo limpio de lo sucio. No hay contaminación cruzada",
     "action": [
       "DEFINIR  Y PUBLICAR FLUJO OPERACIONAL ZONA LIMPIA-SUCIO",
       "CALCULAR RENDIMIENTO PARA CUMPLIR CON EL CORRECTO LAVADO",
@@ -685,7 +680,7 @@
     ]
   },
   {
-    "question": "Procedimiento-Higiene",
+    "question": "LVA 76. Procedimiento de higiene de vajilla y utensilios, en tres etapas (lavado, enjuague, sanitizado) - Disposición de agua caliente",
     "action": [
       "COLOCAR LAVADERO O CUBA PARA SANITIZACIÓN",
       "PUBLICAR FLUJO OPERACIONAL",
@@ -695,7 +690,7 @@
     ]
   },
   {
-    "question": "Orden-Area",
+    "question": "LVA 77. Orden general del área",
     "action": [
       "COMPRAR MAQUINA LAVAVAJILLAS",
       "PUBLICAR FLUJO OPERACIONAL",
@@ -705,7 +700,7 @@
     ]
   },
   {
-    "question": "Termometros-Balanzas",
+    "question": "QQ 78. Termómetros y balanzas suficientes, en correcto estado y limpios:",
     "action": [
       "CODIFICAR INSTRUMENTOS PARA CADA AREA",
       "LLEVAR REGISTROS DE VERIFICACIÓN DE LOS INSTRUMENTOS",
@@ -716,7 +711,7 @@
     ]
   },
   {
-    "question": "Monitoreo-Controles",
+    "question": "QQ 79. Verificar monitoreo de controles de proceso y verificación por la supervisión (en degustación debe revisar planillas):",
     "action": [
       "SOLICITAR REGISTROS DE CONTROLES DE PROCESO EN DEGUSTACIÓN",
       "CARTAS DE AMONESTACIÓN POR INCUMPLIMIENTO MAL LLENADO DE REGISTROS",
@@ -725,7 +720,7 @@
     ]
   },
   {
-    "question": "Acciones-Correctivas",
+    "question": "QQ 80. Verificar aplicación y verificación (firmas) de acciones correctivas en registros de días anteriores:",
     "action": [
       "SOLICITAR REGISTROS DE CONTROLES DE PROCESO EN DEGUSTACIÓN",
       "CARTAS DE AMONESTACIÓN POR INCUMPLIMIENTO MAL LLENADO DE REGISTROS Y TOMA DE ACCIONES CORRECTIVAS",
@@ -734,7 +729,7 @@
     ]
   },
   {
-    "question": "Registro-Contramuestras",
+    "question": "QQ 81. Verificar registro y toma de contramuestras, considerar menú y gramaje (100 a 200 gramos):",
     "action": [
       "REALIZAR REGISTRO REVISIÓN CONTROL DE CONTRAMUESTRAS",
       "CARTAS DE AMONESTACIÓN POR INCUMPLIMIENTO DE GRAMAJES Y NO REALIZAR REGISTRO",
@@ -743,7 +738,59 @@
     ]
   },
   {
-    "question": "Dosificacion",
+    "question": "PPT 82. El flujo del personal, vehículos y de materias primas en las distintas etapas del proceso, es ordenado y conocido por todos los que participan en la elaboración, para evitar contaminación cruzada. (Art. 63)",
+    "action": [
+      "REALIZAR FLUJOS OPERACIONALES DE PERSONAL, DESECHOS.  PRODUCTOS Y VEHICULOS",
+      "CAPACITAR AL PERSONAL EN LOS FLUJOS OPERACIONALES",
+      "PUBLICAR LOS FLUJOS OPERACIONALES"
+    ]
+  },
+  {
+    "question": "PPT 83. Se cuenta con procedimientos escritos de los procesos (Formulación del producto, flujos de operación, procesos productivos). (Art. 3, 11, 63, 66, 69, 132)",
+    "action": [
+      "MANTENER ARCHIVADOS LOS PROCEDIMIENTOS",
+      "REALIZAR PROGRAMA DE CAPACITACION DE LOS PROCEDIMIENTOS DE LOS PROCESOS",
+      "CAPACITAR DE FORMA CONSTANTE LOS PROCEDIMIENTOS DE LOS PROCESO"
+    ]
+  },
+  {
+    "question": "PPT 84. Los productos se almacenan en condiciones que eviten su deterioro y contaminación (envases, temperatura, humedad, etc.). (Art.11, 67)",
+    "action": [
+      "CUMPLIR PROGRAMA DE HIGIENE",
+      "REALIZAR PROGRAMA DE HIGIENE",
+      "REALIZAR REGISTRO DE MONITOREO Y VERIFICACIÓN DE ASEO",
+      "CARTAS DE AMONESTACIÓN POR INCUMPLIMIENTO"
+    ]
+  },
+  {
+    "question": "PPT 85. La distribución de los productos terminados se realiza en vehículos autorizados, limpios y en buen estado. (Art. 11, 68)",
+    "action": [
+      "REVISAR A TRAVES DE CHECKLIST LA LIMPIEZA DE LAS CAMIONETAS",
+      "REALIZAR INSPECCIÓN VISUAL DE LOS VEHICULOS",
+      "ARCHIVAR RESOLUCIÓN SANITARIA DE LOS VEHICULOS",
+      "REVISAR DOCUMENTOS DE LA MANTENCIÓN DE LOS VEHICULOS"
+    ]
+  },
+  {
+    "question": "PPT 86. Para envasar los productos se utilizan materiales adecuados, los cuales son mantenidos en condiciones que eviten su contaminación. (Art. 11, 123)",
+    "action": [
+      "COMPRAR TAPAS CON SELLADO AL VACIO",
+      "ORDENAR LA ESTIBA DE LOS ALIMENTOS",
+      "COLOCAR PALLET O WENCOS PARA EVITAR TENER ALIMENTOS AL PISO",
+      "CONTROLAR TEMPERATURA INICIAL DEL VEHICULO"
+    ]
+  },
+  {
+    "question": "PPT 87. Los productos se etiquetan de acuerdo a las exigencias reglamentarias. (Art. 107 al 121)",
+    "action": [
+      "COMPRAR ROTULADORA ZEBRA",
+      "REALIZAR ETIQUETAS SEGUN ART. 107",
+      "CAPACITACR A PERSONAL EN TEMAS DE ROTULACIÓN",
+      "CARTAS DE AMONESTACIÓN POR INCUMPLIMIENTO"
+    ]
+  },
+  {
+    "question": "MA 88. Dosificación correcta de detergentes y sanitizantes:",
     "action": [
       "SOLICITAR A PROVEEDOR DE QUIMICOS CAPACITACION DE DILUCIONES",
       "IMPLEMENTAR DILUTORES AUTOMATICOS",
@@ -751,7 +798,7 @@
     ]
   },
   {
-    "question": "Productos",
+    "question": "MA 89. Productos químicos autorizados por la empresa, verificar cumplimiento del 100% del listado y programa:",
     "action": [
       "ARCHIVAR AUTORIZACIÓN SANITARIA DE EMPRESA DE QUIMICOS",
       "SOLICITAR A PROVEEDOR DE QUIMICOS PROGRAMA DE VISITA",
@@ -760,7 +807,7 @@
     ]
   },
   {
-    "question": "Basureros",
+    "question": "MA 90. Basureros limpios y sanitizados, con pedal, tapa y bolsa:",
     "action": [
       "IMPLEMENTAR EN PROGRAMA DE HIGIENE LA LIMPIEZA Y SANITIZACION DE BASUREROS",
       "COMPRAR BASUREROS CON PEDAL",
@@ -769,7 +816,7 @@
     ]
   },
   {
-    "question": "Retiro-Basura",
+    "question": "MA 91. Frecuencia de retiro de basura de las áreas (75% de la capacidad del contenedor):",
     "action": [
       "IMPLEMENTAR EN PROGRAMA DE HIGIENE LA LIMPIEZA Y SANITIZACION DE BASUREROS",
       "COMPRAR BASUREROS CON PEDAL",
@@ -779,7 +826,7 @@
     ]
   },
   {
-    "question": "Limpieza-Area-Basura",
+    "question": "MA 92. Limpieza y sanitización de la sala o área destinada a la basura(sala,caseta):",
     "action": [
       "IMPLEMENTAR EN PROGRAMA DE HIGIENE LA LIMPIEZA Y SANITIZACION DE SALA DE BASURA",
       "PEDIR A PROVEEDOR DE QUIMICO USO DE QUIMICOS PARA EL CORRECTO LAVADO DE LAS SALAS DE BASURA",
@@ -788,7 +835,7 @@
     ]
   },
   {
-    "question": "Manejo-Aceites",
+    "question": "MA 93. Aceites usados, son correctamente envasados, rotulados. Ausencia de grasa en los desagües:",
     "action": [
       "CONTAR CON UNA EMPRESA DE RETIRO DE ACEITES",
       "DEFINIR UN LUGAR DE ALMACENBAMIENTO",
@@ -797,7 +844,7 @@
     ]
   },
   {
-    "question": "Separacion-Residuos",
+    "question": "MA 94. Separación de residuos sólidos y grasa durante desconche de vajilla y ollas:",
     "action": [
       "IMPLEMENTAR COLADORES PARA SEPARAR LOS SOLIDOS DE LAS GRASAS",
       "COLOCAR FILTROS DE SOLIDOS EN LAS CANALETAS",
@@ -806,73 +853,21 @@
     ]
   },
   {
-    "question": "ppt-flujo",
-    "action": [
-      "REALIZAR FLUJOS OPERACIONALES DE PERSONAL, DESECHOS.  PRODUCTOS Y VEHICULOS",
-      "CAPACITAR AL PERSONAL EN LOS FLUJOS OPERACIONALES",
-      "PUBLICAR LOS FLUJOS OPERACIONALES"
-    ]
-  },
-  {
-    "question": "ppt-cuenta",
-    "action": [
-      "MANTENER ARCHIVADOS LOS PROCEDIMIENTOS",
-      "REALIZAR PROGRAMA DE CAPACITACION DE LOS PROCEDIMIENTOS DE LOS PROCESOS",
-      "CAPACITAR DE FORMA CONSTANTE LOS PROCEDIMIENTOS DE LOS PROCESO"
-    ]
-  },
-  {
-    "question": "ppt-almacenamiento",
-    "action": [
-      "CUMPLIR PROGRAMA DE HIGIENE",
-      "REALIZAR PROGRAMA DE HIGIENE",
-      "REALIZAR REGISTRO DE MONITOREO Y VERIFICACIÓN DE ASEO",
-      "CARTAS DE AMONESTACIÓN POR INCUMPLIMIENTO"
-    ]
-  },
-  {
-    "question": "ppt-distribucion",
-    "action": [
-      "REVISAR A TRAVES DE CHECKLIST LA LIMPIEZA DE LAS CAMIONETAS",
-      "REALIZAR INSPECCIÓN VISUAL DE LOS VEHICULOS",
-      "ARCHIVAR RESOLUCIÓN SANITARIA DE LOS VEHICULOS",
-      "REVISAR DOCUMENTOS DE LA MANTENCIÓN DE LOS VEHICULOS"
-    ]
-  },
-  {
-    "question": "ppt-envasado",
-    "action": [
-      "COMPRAR TAPAS CON SELLADO AL VACIO",
-      "ORDENAR LA ESTIBA DE LOS ALIMENTOS",
-      "COLOCAR PALLET O WENCOS PARA EVITAR TENER ALIMENTOS AL PISO",
-      "CONTROLAR TEMPERATURA INICIAL DEL VEHICULO"
-    ]
-  },
-  {
-    "question": "ppt-etiqueta",
-    "action": [
-      "COMPRAR ROTULADORA ZEBRA",
-      "REALIZAR ETIQUETAS SEGUN ART. 107",
-      "CAPACITACR A PERSONAL EN TEMAS DE ROTULACIÓN",
-      "CARTAS DE AMONESTACIÓN POR INCUMPLIMIENTO"
-    ]
-  },
-  {
-    "question": "Autorizaciones",
+    "question": "DOC 95. Autorizaciones Sanitarias (casino y verduras crudas):",
     "action": [
       "ARCHIVAR RESOLUCIONES SANITARIAS",
       "DEFINIR LUGAR DE UBICACIÓN DE LA DOCUMENTACIÓN SEREMI"
     ]
   },
   {
-    "question": "Libro-Inspeccion",
+    "question": "DOC 96. Libro de inspección SEREMI Salud o Archivador con actas dejadas por la autoridad:",
     "action": [
       "ARCHIVAR VISITAS DEL SEREMI",
       "DEFINIR LUGAR DE UBICACIÓN DE LA DOCUMENTACIÓN SEREMI"
     ]
   },
   {
-    "question": "Informes-Microbio",
+    "question": "DOC 97. Informes de muestreo microbiológico/luminometría. Planes de acción, charlas al personal si corresponde:",
     "action": [
       "ARCHIVAR ANALISIS MICROBIOLOGICOS DE FORMA DIGITAL",
       "MANTENER PLANILLA DE CONTROL DE ANALISIS MIRCOBIOLOGICOS",
@@ -881,7 +876,7 @@
     ]
   },
   {
-    "question": "Informes-Auditoria",
+    "question": "TRA DOC 98. Informes de auditoría sanitaria, plan de acción, verificación de cumplimiento, por Administrador:",
     "action": [
       "ARCHIVAR AUDITORIAS, INSPECCIONES DE FORMA DIGITAL",
       "REALIZAR CONSOLIDADO DE PLANES DE ACCIÓN",
@@ -889,7 +884,7 @@
     ]
   },
   {
-    "question": "Programa-Charlas",
+    "question": "TRA DOC 99. Registros del cumplimiento al 100% del programa de charlas en Calidad y Medio Ambiente:",
     "action": [
       "ARCHIVAR CHARLAS Y CAPACITACIONES DE CALIDAD  Y MEDIO AMBIENTE",
       "REALIZAR PLANILLA DE SEGUIMIENTO CAPACAITACIÓN",
@@ -897,14 +892,14 @@
     ]
   },
   {
-    "question": "Reporte-Proveedor",
+    "question": "DOC 100. Reporte de proveedor productos químicos:",
     "action": [
       "SOLICITAR A PROVEEDOR DE QUIMICOS LOS REPORTES DE VISITA",
       "MANTENER DE FORMA DIGITAL REPORTES DE PROVEEDOR DE QUIMICOS"
     ]
   },
   {
-    "question": "Existe-programa",
+    "question": "CAP 101. Existe un programa escrito y con sus registros correspondientes de capacitación del personal en materia de manipulación higiénica de los alimentos e higiene personal. (Art. 52, 69)",
     "action": [
       "ARCHIVAR CHARLAS Y CAPACITACIONES DE CALIDAD  Y MANIPULACION HIGIENICA",
       "REALIZAR PLANILLA DE SEGUIMIENTO CAPACAITACIÓN",
@@ -912,7 +907,7 @@
     ]
   },
   {
-    "question": "Existe-capacitacion",
+    "question": "CAP 102. Existe un programa escrito de capacitación del personal de aseo en técnicas de limpieza y sus registros correspondientes. (Art. 41, 69)",
     "action": [
       "ARCHIVAR CHARLAS Y CAPACITACIONES DE ASEO EN TECNICAS DE LIMPIEZA",
       "REALIZAR PLANILLA DE SEGUIMIENTO CAPACAITACIÓN",

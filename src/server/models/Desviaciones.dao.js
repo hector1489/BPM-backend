@@ -16,7 +16,9 @@ const handleEmptyField = (value) => {
 };
 
 const createDesviacion = async (desviacionesData) => {
-  const safeValuesList = desviacionesData.map(desviacion => {
+  const desviacionesArray = Array.isArray(desviacionesData) ? desviacionesData : [desviacionesData];
+
+  const safeValuesList = desviacionesArray.map(desviacion => {
     return {
       numeroRequerimiento: handleEmptyField(desviacion.numeroRequerimiento),
       preguntasAuditadas: handleEmptyField(desviacion.preguntasAuditadas),
@@ -88,6 +90,7 @@ const createDesviacion = async (desviacionesData) => {
       );
     }
 
+
     await sendGroupedEmail(safeValuesList);
     console.log('Desviaciones creadas y correo enviado exitosamente.');
 
@@ -95,6 +98,7 @@ const createDesviacion = async (desviacionesData) => {
     console.error('Error al almacenar los datos en la base de datos o enviar el correo:', error.message);
   }
 };
+
 
 const sendGroupedEmail = async (desviaciones) => {
   const mailOptions = {

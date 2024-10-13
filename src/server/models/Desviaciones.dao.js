@@ -101,7 +101,7 @@ const createDesviacion = async (desviacionesData) => {
 
 
 const sendGroupedEmail = async (desviaciones) => {
-
+  console.log(desviaciones);
   if (!desviaciones.length || !desviaciones[0].correo) {
     console.error('Error: No hay destinatarios definidos.');
     return;

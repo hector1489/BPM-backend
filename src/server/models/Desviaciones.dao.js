@@ -101,8 +101,13 @@ const createDesviacion = async (desviacionesData) => {
 
 
 const sendGroupedEmail = async (desviaciones) => {
-  
-  const recipientEmail = desviaciones[0]?.correo?.trim() !== '' ? desviaciones[0].correo : 'bbpmauditorias@gmail.com';
+
+  if (!desviaciones.length || !desviaciones[0].correo) {
+    console.error('Error: No hay destinatarios definidos.');
+    return;
+  }
+
+  const recipientEmail = desviaciones[0].correo.trim() !== '' ? desviaciones[0].correo : 'bbpmauditorias@gmail.com';
 
   const mailOptions = {
     from: process.env.EMAIL_USER,

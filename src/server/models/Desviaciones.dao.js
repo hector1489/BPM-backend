@@ -99,15 +99,22 @@ const createDesviacion = async (desviacionesData) => {
   }
 };
 
-
 const sendGroupedEmail = async (desviaciones) => {
-  console.log(desviaciones);
-  if (!desviaciones.length || !desviaciones[0].correo) {
-    console.error('Error: No hay destinatarios definidos.');
+  if (!desviaciones.length) {
+    console.error('Error: No hay desviaciones para enviar el correo.');
     return;
   }
 
-  const recipientEmail = desviaciones[0].correo.trim() !== '' ? desviaciones[0].correo : 'bbpmauditorias@gmail.com';
+  console.log('Correo del primer elemento:', desviaciones[0].correo);
+
+  const recipientEmail = desviaciones[0]?.correo?.trim() !== '' ? desviaciones[0].correo.trim() : 'bbpmauditorias@gmail.com';
+
+  console.log('Enviando correo a:', recipientEmail);
+
+  if (!recipientEmail) {
+    console.error('Error: No se ha definido un destinatario de correo.');
+    return;
+  }
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
@@ -123,6 +130,7 @@ const sendGroupedEmail = async (desviaciones) => {
     console.error('Error al enviar el correo:', error.message);
   }
 };
+
 
 
 const generateEmailBody = (desviaciones) => {

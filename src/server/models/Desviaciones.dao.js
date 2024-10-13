@@ -101,9 +101,12 @@ const createDesviacion = async (desviacionesData) => {
 
 
 const sendGroupedEmail = async (desviaciones) => {
+  
+  const recipientEmail = desviaciones[0]?.correo?.trim() !== '' ? desviaciones[0].correo : 'bbpmauditorias@gmail.com';
+
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: desviaciones.correo.trim() !== '' ? desviaciones.correo : 'bbpmauditorias@gmail.com',
+    to: recipientEmail,
     subject: 'BPM AUDITORIAS - Desviaciones Creación',
     text: generateEmailBody(desviaciones)
   };
@@ -115,6 +118,7 @@ const sendGroupedEmail = async (desviaciones) => {
     console.error('Error al enviar el correo:', error.message);
   }
 };
+
 
 const generateEmailBody = (desviaciones) => {
   let body = `Se han creado las siguientes desviaciones:\n\n`;

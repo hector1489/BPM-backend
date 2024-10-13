@@ -103,7 +103,7 @@ const createDesviacion = async (desviacionesData) => {
 const sendGroupedEmail = async (desviaciones) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: desviaciones[0].correo.trim() !== '' ? desviaciones[0].correo : 'fungilydev@gmail.com',
+    to: desviaciones.correo.trim() !== '' ? desviaciones.correo : 'bbpmauditorias@gmail.com',
     subject: 'BPM AUDITORIAS - Desviaciones Creación',
     text: generateEmailBody(desviaciones)
   };

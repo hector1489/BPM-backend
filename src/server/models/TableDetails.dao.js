@@ -18,7 +18,7 @@ const createTablaDetail = async (dataList) => {
       throw new Error(`Los campos obligatorios están vacíos para el registro: ${JSON.stringify(data)}`);
     }
 
-    const values = [data.numero_auditoria, data.columna2, data.columna3, data.columna4];
+    const values = [data.numero_auditoria, data.columna1, data.columna2, data.columna3, data.columna4];
 
     try {
       return await db(query, values);

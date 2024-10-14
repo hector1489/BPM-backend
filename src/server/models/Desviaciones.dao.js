@@ -11,6 +11,69 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const formatDate = (date) => {
+  if (!date) return null;
+  const dateObj = new Date(date);
+  return isNaN(dateObj.getTime()) ? null : dateObj.toISOString().split('T')[0];
+};
+
+
+const sendGroupedEmail = async (desviaciones) => {
+  if (!desviaciones.length) {
+    console.error('Error: No hay desviaciones para enviar el correo.');
+    return;
+  }
+
+  console.log('Correo del primer elemento:', desviaciones[0].correo);
+
+  const recipientEmail = desviaciones[0]?.correo?.trim() !== '' ? desviaciones[0].correo.trim() : 'bbpmauditorias@gmail.com';
+
+  console.log('Enviando correo a:', recipientEmail);
+
+  if (!recipientEmail) {
+    console.error('Error: No se ha definido un destinatario de correo.');
+    return;
+  }
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: recipientEmail,
+    subject: 'BPM AUDITORIAS - Desviaciones Creación',
+    text: generateEmailBody(desviaciones)
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Correo enviado con éxito.');
+  } catch (error) {
+    console.error('Error al enviar el correo:', error.message);
+  }
+};
+
+
+
+const generateEmailBody = (desviaciones) => {
+  let body = `Se han creado las siguientes desviaciones:\n\n`;
+  
+  desviaciones.forEach((desviacion, index) => {
+    body += `
+    Desviación ${index + 1}:
+    - Número de Requerimiento: ${desviacion.numeroRequerimiento}
+    - Preguntas Auditadas: ${desviacion.preguntasAuditadas}
+    - Desviación o Criterio: ${desviacion.desviacionOCriterio}
+    - Tipo de Acción: ${desviacion.tipoDeAccion}
+    - Responsable del Problema: ${desviacion.responsableProblema}
+    - Local: ${desviacion.local}
+    - Criticidad: ${desviacion.criticidad}
+    - Fecha de Recepción: ${desviacion.fechaRecepcion}
+    - Fecha de Solución Programada: ${desviacion.fechaSolucion}
+    - Estado: ${desviacion.estado}
+    - Contacto con Clientes: ${desviacion.contactoClientes}\n\n`;
+  });
+
+  body += `Por favor, revisa el sistema para más detalles.`;
+  return body;
+};
 
 
 const handleEmptyField = (value) => {
@@ -20,8 +83,6 @@ const handleEmptyField = (value) => {
 const createDesviacion = async (desviacionesData) => {
   const desviacionesArray = Array.isArray(desviacionesData) ? desviacionesData : [desviacionesData];
 
-
-  const fechaRecepcion = formatDate(desviacion.fechaRecepcionSolicitud);
 
   const safeValuesList = desviacionesArray.map(desviacion => {
     return {
@@ -33,7 +94,7 @@ const createDesviacion = async (desviacionesData) => {
       local: handleEmptyField(desviacion.local),
       criticidad: handleEmptyField(desviacion.criticidad),
       accionesCorrectivas: handleEmptyField(desviacion.accionesCorrectivas),
-      fechaRecepcion,
+      fechaRecepcion: formatDate(desviacion.fechaRecepcionSolicitud),
       fechaSolucion: formatDate(desviacion.fechaSolucionProgramada),
       estado: handleEmptyField(desviacion.estado),
       fechaCambio: formatDate(desviacion.fechaCambioEstado),
@@ -104,63 +165,6 @@ const createDesviacion = async (desviacionesData) => {
   }
 };
 
-const sendGroupedEmail = async (desviaciones) => {
-  if (!desviaciones.length) {
-    console.error('Error: No hay desviaciones para enviar el correo.');
-    return;
-  }
-
-  console.log('Correo del primer elemento:', desviaciones[0].correo);
-
-  const recipientEmail = desviaciones[0]?.correo?.trim() !== '' ? desviaciones[0].correo.trim() : 'bbpmauditorias@gmail.com';
-
-  console.log('Enviando correo a:', recipientEmail);
-
-  if (!recipientEmail) {
-    console.error('Error: No se ha definido un destinatario de correo.');
-    return;
-  }
-
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: recipientEmail,
-    subject: 'BPM AUDITORIAS - Desviaciones Creación',
-    text: generateEmailBody(desviaciones)
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log('Correo enviado con éxito.');
-  } catch (error) {
-    console.error('Error al enviar el correo:', error.message);
-  }
-};
-
-
-
-const generateEmailBody = (desviaciones) => {
-  let body = `Se han creado las siguientes desviaciones:\n\n`;
-  
-  desviaciones.forEach((desviacion, index) => {
-    body += `
-    Desviación ${index + 1}:
-    - Número de Requerimiento: ${desviacion.numeroRequerimiento}
-    - Preguntas Auditadas: ${desviacion.preguntasAuditadas}
-    - Desviación o Criterio: ${desviacion.desviacionOCriterio}
-    - Tipo de Acción: ${desviacion.tipoDeAccion}
-    - Responsable del Problema: ${desviacion.responsableProblema}
-    - Local: ${desviacion.local}
-    - Criticidad: ${desviacion.criticidad}
-    - Fecha de Recepción: ${desviacion.fechaRecepcion}
-    - Fecha de Solución Programada: ${desviacion.fechaSolucion}
-    - Estado: ${desviacion.estado}
-    - Contacto con Clientes: ${desviacion.contactoClientes}\n\n`;
-  });
-
-  body += `Por favor, revisa el sistema para más detalles.`;
-  return body;
-};
-
 
 
 const getAllDesviaciones = async () => {
@@ -172,11 +176,7 @@ const getAllDesviaciones = async () => {
   }
 };
 
-const formatDate = (date) => {
-  if (!date) return null;
-  const dateObj = new Date(date);
-  return isNaN(dateObj.getTime()) ? null : dateObj.toISOString().split('T')[0];
-};
+
 
 const updateDesviacion = async (id, desviacionData) => {
   const {

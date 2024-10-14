@@ -11,12 +11,17 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+
+
 const handleEmptyField = (value) => {
   return value && value.trim() !== '' ? value : 'N/A';
 };
 
 const createDesviacion = async (desviacionesData) => {
   const desviacionesArray = Array.isArray(desviacionesData) ? desviacionesData : [desviacionesData];
+
+
+  const fechaRecepcion = formatDate(desviacion.fechaRecepcionSolicitud);
 
   const safeValuesList = desviacionesArray.map(desviacion => {
     return {
@@ -28,7 +33,7 @@ const createDesviacion = async (desviacionesData) => {
       local: handleEmptyField(desviacion.local),
       criticidad: handleEmptyField(desviacion.criticidad),
       accionesCorrectivas: handleEmptyField(desviacion.accionesCorrectivas),
-      fechaRecepcion: formatDate(desviacion.fechaRecepcionSolicitud),
+      fechaRecepcion,
       fechaSolucion: formatDate(desviacion.fechaSolucionProgramada),
       estado: handleEmptyField(desviacion.estado),
       fechaCambio: formatDate(desviacion.fechaCambioEstado),
@@ -170,7 +175,7 @@ const getAllDesviaciones = async () => {
 const formatDate = (date) => {
   if (!date) return null;
   const dateObj = new Date(date);
-  return isNaN(dateObj.getTime()) ? null : dateObj.toISOString().split('T')[0]; // Retorna la fecha en formato YYYY-MM-DD
+  return isNaN(dateObj.getTime()) ? null : dateObj.toISOString().split('T')[0];
 };
 
 const updateDesviacion = async (id, desviacionData) => {

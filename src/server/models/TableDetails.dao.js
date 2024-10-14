@@ -21,7 +21,7 @@ const createTablaDetail = async (dataList) => {
     const values = [data.numero_auditoria, data.columna2, data.columna3, data.columna4];
 
     try {
-      return await db.query(query, values);
+      return await db(query, values);
     } catch (error) {
       console.error('Error al insertar datos:', error.message);
       throw new Error('Error en la inserción de datos');
@@ -41,7 +41,7 @@ const getAllTablaDetails = async () => {
   const query = 'SELECT * FROM tabla_details;';
 
   try {
-    const result = await db.query(query);
+    const result = await db(query);
     return result.rows;
   } catch (error) {
     console.error('Error al obtener los detalles de la tabla:', error.message);
@@ -59,7 +59,7 @@ const deleteTablaDetail = async (id) => {
   }
 
   try {
-    const result = await db.query(query, values);
+    const result = await db(query, values);
     if (result.rowCount === 0) {
       throw new Error('No se encontró ningún registro con el ID proporcionado');
     }

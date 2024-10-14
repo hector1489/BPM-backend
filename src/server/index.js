@@ -7,7 +7,7 @@ const userRoutes = require('./routes/userRoutes');
 const desviacionesRoutes = require('./routes/desviacionesRoutes');
 const questionsRoutes = require('./routes/questionsRoutes');
 const photosRoutes = require('./routes/photosRoutes')
-const detailsRoutes = require('./routes/detailsRoutes');
+const detailsRoutes = require('./routes/tableDetailsRoutes');
 const warningRoutes = require('./routes/warningRoutes');
 const pdfRoutes = require('./routes/pdfRoutes');
 
@@ -25,6 +25,7 @@ app.use('/photos', photosRoutes);
 app.use('/details', detailsRoutes);
 app.use('/warning', warningRoutes);
 app.use('/pdf', pdfRoutes);
+
 
 
 // Middleware para manejo de errores

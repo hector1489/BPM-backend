@@ -24,7 +24,8 @@ const sendGroupedEmail = async (safeValuesList) => {
     return;
   }
 
-  const recipientEmail = safeValuesList[0]?.correo?.trim() !== '' ? safeValuesList[0].correo.trim() : 'bbpmauditorias@gmail.com';
+  const recipientEmail = safeValuesList[0]?.correo?.trim() !== '' ? safeValuesList[0].correo : 'bbpmauditorias@gmail.com';
+
 
   if (!recipientEmail) {
     console.error('Error: No se ha definido un destinatario de correo.');

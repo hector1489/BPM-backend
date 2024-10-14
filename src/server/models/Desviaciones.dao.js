@@ -18,17 +18,13 @@ const formatDate = (date) => {
 };
 
 
-const sendGroupedEmail = async (desviaciones) => {
-  if (!desviaciones.length) {
+const sendGroupedEmail = async (safeValuesList) => {
+  if (!safeValuesList.length) {
     console.error('Error: No hay desviaciones para enviar el correo.');
     return;
   }
 
-  console.log('Correo del primer elemento:', desviaciones[0].correo);
-
-  const recipientEmail = desviaciones[0]?.correo?.trim() !== '' ? desviaciones[0].correo.trim() : 'bbpmauditorias@gmail.com';
-
-  console.log('Enviando correo a:', recipientEmail);
+  const recipientEmail = safeValuesList[0]?.correo?.trim() !== '' ? safeValuesList[0].correo.trim() : 'bbpmauditorias@gmail.com';
 
   if (!recipientEmail) {
     console.error('Error: No se ha definido un destinatario de correo.');
@@ -39,7 +35,7 @@ const sendGroupedEmail = async (desviaciones) => {
     from: process.env.EMAIL_USER,
     to: recipientEmail,
     subject: 'BPM AUDITORIAS - Desviaciones Creación',
-    text: generateEmailBody(desviaciones)
+    text: generateEmailBody(safeValuesList)
   };
 
   try {
@@ -50,11 +46,9 @@ const sendGroupedEmail = async (desviaciones) => {
   }
 };
 
-
-
 const generateEmailBody = (desviaciones) => {
   let body = `Se han creado las siguientes desviaciones:\n\n`;
-  
+
   desviaciones.forEach((desviacion, index) => {
     body += `
     Desviación ${index + 1}:
@@ -76,6 +70,7 @@ const generateEmailBody = (desviaciones) => {
 };
 
 
+
 const handleEmptyField = (value) => {
   return value && value.trim() !== '' ? value : 'N/A';
 };
@@ -83,8 +78,15 @@ const handleEmptyField = (value) => {
 const createDesviacion = async (desviacionesData) => {
   const desviacionesArray = Array.isArray(desviacionesData) ? desviacionesData : [desviacionesData];
 
+  const formatDate = (dateString) => {
+    if (!dateString) return null;
+    const formattedDate = moment(dateString, ['D/M/YYYY', 'YYYY-MM-DD'], true);
+    return formattedDate.isValid() ? formattedDate.format('YYYY-MM-DD') : null;
+  };
 
-  const safeValuesList = desviacionesArray.map(desviacion => {
+  const handleEmptyField = (field) => (field ? field : 'N/A');
+
+  const safeValuesList = desviacionesArray.map((desviacion) => {
     return {
       numeroRequerimiento: handleEmptyField(desviacion.numeroRequerimiento),
       preguntasAuditadas: handleEmptyField(desviacion.preguntasAuditadas),
@@ -104,7 +106,7 @@ const createDesviacion = async (desviacionesData) => {
       auditor: handleEmptyField(desviacion.auditor),
       correo: handleEmptyField(desviacion.correo),
       fechaModificacion: formatDate(desviacion.fechaUltimaModificacion),
-      authToken: desviacion.authToken || 'N/A'
+      authToken: desviacion.authToken || 'N/A',
     };
   });
 
@@ -156,15 +158,12 @@ const createDesviacion = async (desviacionesData) => {
       );
     }
 
-
     await sendGroupedEmail(safeValuesList);
     console.log('Desviaciones creadas y correo enviado exitosamente.');
-
   } catch (error) {
     console.error('Error al almacenar los datos en la base de datos o enviar el correo:', error.message);
   }
 };
-
 
 
 const getAllDesviaciones = async () => {

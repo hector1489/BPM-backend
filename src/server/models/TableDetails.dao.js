@@ -4,16 +4,16 @@ const db = require('../database/db');
 const createTablaDetail = async (dataList) => {
   const query = 'INSERT INTO tabla_details (numero_auditoria, field1, field2, field3, field4) VALUES ($1, $2, $3, $4, $5) RETURNING *;';
 
+  // Verificar que dataList es un array y no está vacío
   if (!Array.isArray(dataList)) {
     throw new Error('Se esperaba un array de datos');
   }
-
   if (dataList.length === 0) {
     throw new Error('El array de datos está vacío');
   }
 
   const insertPromises = dataList.map(async (data) => {
-  
+    // Verificar que los campos obligatorios no estén vacíos
     if (!data.numero_auditoria || !data.columna2 || !data.columna3 || !data.columna4) {
       throw new Error(`Los campos obligatorios están vacíos para el registro: ${JSON.stringify(data)}`);
     }
@@ -21,7 +21,8 @@ const createTablaDetail = async (dataList) => {
     const values = [data.numero_auditoria, data.columna1, data.columna2, data.columna3, data.columna4];
 
     try {
-      return await db(query, values);
+      // Ejecutar la consulta de inserción
+      return await db(query, values); // Verifica que db.query esté correctamente configurado
     } catch (error) {
       console.error('Error al insertar datos:', error.message);
       throw new Error('Error en la inserción de datos');
@@ -29,6 +30,7 @@ const createTablaDetail = async (dataList) => {
   });
 
   try {
+    // Ejecutar todas las inserciones en paralelo
     return await Promise.all(insertPromises);
   } catch (error) {
     console.error('Error en la operación de inserción:', error.message);
@@ -50,23 +52,20 @@ const getAllTablaDetails = async () => {
 };
 
 // Función para eliminar un registro por ID en tabla_details
-const deleteTablaDetail = async (id) => {
-  const query = 'DELETE FROM tabla_details WHERE id = $1 RETURNING *;';
-  const values = [id];
+const  deleteTablaDetail = async (numero_auditoria) => {
+  const query = 'DELETE FROM tabla_details WHERE numero_auditoria = $1 RETURNING *;';
+  const values = [numero_auditoria];
 
-  if (!id || isNaN(id)) {
-    throw new Error('El ID proporcionado no es válido');
+  if (!numero_auditoria) {
+    throw new Error('El número de auditoría proporcionado no es válido');
   }
 
   try {
     const result = await db(query, values);
-    if (result.rowCount === 0) {
-      throw new Error('No se encontró ningún registro con el ID proporcionado');
-    }
-    return result.rows[0];
+    return result;
   } catch (error) {
-    console.error('Error al eliminar el detalle:', error.message);
-    throw new Error('No se pudo eliminar el registro');
+    console.error('Error al eliminar los registros:', error.message);
+    throw new Error('No se pudieron eliminar los registros');
   }
 };
 

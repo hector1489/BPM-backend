@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createTablaDetail, getAllTablaDetails, deleteTablaDetail } = require('../models/TableDetails.dao');
+const { createTablaDetail, getAllTablaDetails, deleteTablaDetail,  getTablaDetailsByNumeroAuditoria  } = require('../models/TableDetails.dao');
 
 
 router.get('/tabla-details', async (req, res) => {
@@ -12,6 +12,21 @@ router.get('/tabla-details', async (req, res) => {
   }
 });
 
+
+router.get('/tabla-details/:numero_auditoria', async (req, res) => {
+  const numero_auditoria = req.params.numero_auditoria;
+
+  try {
+    const result = await getTablaDetailsByNumeroAuditoria(numero_auditoria);
+    if (result.length === 0) {
+      return res.status(404).json({ message: 'No se encontraron registros para el número de auditoría proporcionado.' });
+    }
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error al obtener los detalles por número de auditoría:', error.message);
+    res.status(500).json({ error: 'Error al obtener los detalles para el número de auditoría proporcionado.' });
+  }
+});
 
 router.post('/tabla-details', async (req, res) => {
   try {
@@ -43,6 +58,7 @@ router.post('/tabla-details', async (req, res) => {
 
 router.delete('/deleted-details/:numero_auditoria', async (req, res) => {
   const numero_auditoria = req.params.numero_auditoria;
+ 
 
   try {
     await  deleteTablaDetail(numero_auditoria);
@@ -52,6 +68,8 @@ router.delete('/deleted-details/:numero_auditoria', async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar la desviación en la base de datos.' });
   }
 });
+
+
 
 module.exports = router;
 

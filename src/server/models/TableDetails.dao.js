@@ -69,9 +69,38 @@ const  deleteTablaDetail = async (numero_auditoria) => {
   }
 };
 
+const getTablaDetailsByNumeroAuditoria = async (numero_auditoria) => {
+  const query = 'SELECT * FROM tabla_details WHERE numero_auditoria = $1;';
+  const values = [numero_auditoria];
+
+  if (!numero_auditoria) {
+    throw new Error('El número de auditoría proporcionado no es válido o está vacío');
+  }
+
+  try {
+    console.log(`Buscando registros para numero_auditoria: ${numero_auditoria}`);
+
+    const result = await db(query, values);
+
+
+    if (result.rows.length === 0) {
+      console.log('No se encontraron registros para el número de auditoría:', numero_auditoria);
+      return []; 
+    }
+
+    return result.rows;
+  } catch (error) {
+    console.error('Error al obtener los detalles por número de auditoría:', error.message);
+    throw new Error('No se pudieron recuperar los datos para el número de auditoría proporcionado');
+  }
+};
+
+
+
 // Exportar las funciones
 module.exports = {
   createTablaDetail,
   getAllTablaDetails,
-  deleteTablaDetail
+  deleteTablaDetail,
+  getTablaDetailsByNumeroAuditoria 
 };

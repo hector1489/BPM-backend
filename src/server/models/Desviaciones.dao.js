@@ -19,6 +19,8 @@ const formatDate = (date) => {
 
 
 const sendGroupedEmail = async (safeValuesList) => {
+  console.log('Iniciando envío de correo...');
+
   if (!safeValuesList.length) {
     console.error('Error: No hay desviaciones para enviar el correo.');
     return;
@@ -26,6 +28,7 @@ const sendGroupedEmail = async (safeValuesList) => {
 
   const recipientEmail = safeValuesList[0]?.correo?.trim() !== '' ? safeValuesList[0].correo : 'bbpmauditorias@gmail.com';
 
+  console.log('Correo destinatario:', recipientEmail);
 
   if (!recipientEmail) {
     console.error('Error: No se ha definido un destinatario de correo.');
@@ -39,6 +42,9 @@ const sendGroupedEmail = async (safeValuesList) => {
     text: generateEmailBody(safeValuesList)
   };
 
+  console.log('Opciones del correo:', mailOptions);
+
+
   try {
     await transporter.sendMail(mailOptions);
     console.log('Correo enviado con éxito.');
@@ -47,29 +53,22 @@ const sendGroupedEmail = async (safeValuesList) => {
   }
 };
 
+
 const generateEmailBody = (desviaciones) => {
+  console.log('Generando cuerpo del correo...');
   let body = `Se han creado las siguientes desviaciones:\n\n`;
 
   desviaciones.forEach((desviacion, index) => {
     body += `
     Desviación ${index + 1}:
-    - Número de Requerimiento: ${desviacion.numeroRequerimiento}
-    - Preguntas Auditadas: ${desviacion.preguntasAuditadas}
-    - Desviación o Criterio: ${desviacion.desviacionOCriterio}
-    - Tipo de Acción: ${desviacion.tipoDeAccion}
-    - Responsable del Problema: ${desviacion.responsableProblema}
-    - Local: ${desviacion.local}
-    - Criticidad: ${desviacion.criticidad}
-    - Fecha de Recepción: ${desviacion.fechaRecepcion}
-    - Fecha de Solución Programada: ${desviacion.fechaSolucion}
-    - Estado: ${desviacion.estado}
-    - Contacto con Clientes: ${desviacion.contactoClientes}\n\n`;
+    - Auditor: ${desviacion.auditor}
+    - Número de Requerimiento: ${desviacion.numeroRequerimiento}\n\n`;
   });
 
   body += `Por favor, revisa el sistema para más detalles.`;
+  console.log('Cuerpo del correo generado:', body);
   return body;
 };
-
 
 
 const handleEmptyField = (value) => {
@@ -77,6 +76,7 @@ const handleEmptyField = (value) => {
 };
 
 const createDesviacion = async (desviacionesData) => {
+  console.log('Iniciando creación de desviaciones...');
   const desviacionesArray = Array.isArray(desviacionesData) ? desviacionesData : [desviacionesData];
 
   const formatDate = (dateString) => {
@@ -111,8 +111,12 @@ const createDesviacion = async (desviacionesData) => {
     };
   });
 
+  console.log('Lista de valores seguros:', safeValuesList);
+
   try {
     for (const safeValues of safeValuesList) {
+      console.log('Insertando en la base de datos:', safeValues);
+
       await db(
         `INSERT INTO desviaciones (
           numero_requerimiento, 
@@ -159,12 +163,18 @@ const createDesviacion = async (desviacionesData) => {
       );
     }
 
+    console.log('Insertado en la base de datos con éxito. Esperando antes de enviar correo...');
+
+    // Pausa de 2 segundos antes de enviar el correo
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     await sendGroupedEmail(safeValuesList);
     console.log('Desviaciones creadas y correo enviado exitosamente.');
   } catch (error) {
     console.error('Error al almacenar los datos en la base de datos o enviar el correo:', error.message);
   }
 };
+
 
 
 const getAllDesviaciones = async () => {

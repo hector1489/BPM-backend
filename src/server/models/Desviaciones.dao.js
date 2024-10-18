@@ -165,10 +165,7 @@ const createDesviacion = async (desviacionesData) => {
 
     console.log('Insertado en la base de datos con éxito. Esperando antes de enviar correo...');
 
-    // Pausa de 2 segundos antes de enviar el correo
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    await sendGroupedEmail(safeValuesList);
+   
     console.log('Desviaciones creadas y correo enviado exitosamente.');
   } catch (error) {
     console.error('Error al almacenar los datos en la base de datos o enviar el correo:', error.message);

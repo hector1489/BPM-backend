@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createTablaDetail, getAllTablaDetails, deleteTablaDetail,  getTablaDetailsByNumeroAuditoria  } = require('../models/TableDetails.dao');
+const { createTablaDetail, getAllTablaDetails, deleteTablaDetail,  getTablaDetailsByNumeroAuditoria, getDistinctAuditoriaNumbers  } = require('../models/TableDetails.dao');
 
 
 router.get('/tabla-details', async (req, res) => {
@@ -68,6 +68,17 @@ router.delete('/deleted-details/:numero_auditoria', async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar la desviación en la base de datos.' });
   }
 });
+
+router.get('/auditorias', async (req, res) => {
+  try {
+    const result = await getDistinctAuditoriaNumbers();
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error al obtener los números de auditoría:', error.message);
+    res.status(500).json({ error: 'Error al obtener los números de auditoría' });
+  }
+});
+
 
 
 

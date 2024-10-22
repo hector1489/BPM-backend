@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+
+
 const {
   createAuditSheet,
   getAllAuditSheets,
@@ -55,6 +57,7 @@ router.get('/username/:username', async (req, res) => {
 router.post('/audit-sheet', async (req, res) => {
   try {
     const data = req.body;
+    console.log(data);
 
     if (!data.username || !data.numero_auditoria) {
       throw new Error('El nombre de usuario y el número de auditoría son obligatorios');

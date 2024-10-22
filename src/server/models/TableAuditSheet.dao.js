@@ -93,6 +93,23 @@ const getAuditSheetsByUsername = async (username) => {
       throw new Error('No se pudieron recuperar los datos para el nombre de usuario proporcionado');
     }
   };
+
+  const deleteAuditSheetById = async (id) => {
+    const query = 'DELETE FROM audit_sheet WHERE id = $1 RETURNING *;';
+    const values = [id];
+  
+    if (!id) {
+      throw new Error('El id proporcionado no es válido o está vacío');
+    }
+  
+    try {
+      const result = await db(query, values);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error al eliminar el registro de audit_sheet por id:', error.message);
+      throw new Error('No se pudo eliminar el registro');
+    }
+  };
   
 
 // Exportar las funciones
@@ -101,5 +118,6 @@ module.exports = {
   getAllAuditSheets,
   deleteAuditSheet,
   getAuditSheetByNumeroAuditoria,
-  getAuditSheetsByUsername
+  getAuditSheetsByUsername,
+  deleteAuditSheetById
 };

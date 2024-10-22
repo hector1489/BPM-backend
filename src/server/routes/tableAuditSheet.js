@@ -7,7 +7,8 @@ const {
   getAllAuditSheets,
   deleteAuditSheet,
   getAuditSheetByNumeroAuditoria,
-  getAuditSheetsByUsername
+  getAuditSheetsByUsername,
+  deleteAuditSheetById
 } = require('../models/TableAuditSheet.dao');
 
 // Ruta para obtener todos los registros de audit_sheet
@@ -90,6 +91,19 @@ router.delete('/audit-sheet/:numero_auditoria', async (req, res) => {
   } catch (error) {
     console.error('Error al eliminar el registro de audit_sheet:', error.message);
     res.status(500).json({ error: 'Error al eliminar el registro en la base de datos.' });
+  }
+});
+
+router.delete('/audit-sheet/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await deleteAuditSheetById(id);
+    if (!result) {
+      return res.status(404).json({ message: 'No se encontró el registro para eliminar' });
+    }
+    res.status(200).json({ message: 'Registro eliminado con éxito', result });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar el registro' });
   }
 });
 

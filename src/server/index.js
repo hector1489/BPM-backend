@@ -11,6 +11,7 @@ const detailsRoutes = require('./routes/tableDetailsRoutes');
 const warningRoutes = require('./routes/warningRoutes');
 const pdfRoutes = require('./routes/pdfRoutes');
 const emailRoutes = require('./routes/emailRoutes');
+const audit_sheet = require('./routes/tableAuditSheet');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,6 +28,7 @@ app.use('/details', detailsRoutes);
 app.use('/warning', warningRoutes);
 app.use('/pdf', pdfRoutes);
 app.use('/email', emailRoutes);
+app.use('./audit-sheet', audit_sheet)
 
 
 

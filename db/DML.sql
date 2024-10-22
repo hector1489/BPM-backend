@@ -14,3 +14,11 @@ INSERT INTO items (section_id, item_name, note, observation) VALUES
 INSERT INTO averages (section_id, average) VALUES
 (1, 100.00),
 (2, 100.00);
+
+INSERT INTO audit_sheet (numero_auditoria, field1, field2, field3, field4, field5, field6)
+VALUES 
+('AUD123456', 'Valor1', 'Valor2', 'Valor3', 'Valor4', 'Valor5', 'Valor6');
+
+
+
+

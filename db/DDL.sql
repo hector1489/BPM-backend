@@ -57,4 +57,17 @@ CREATE TABLE tabla_warning (
 );
 
 
+CREATE TABLE audit_sheet (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    numero_auditoria VARCHAR(100) NOT NULL,
+    field1 VARCHAR(255),
+    field2 VARCHAR(255),
+    field3 VARCHAR(255),
+    field4 VARCHAR(255),
+    field5 VARCHAR(255),
+    field6 VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 

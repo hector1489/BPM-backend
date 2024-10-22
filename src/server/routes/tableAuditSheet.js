@@ -94,7 +94,7 @@ router.delete('/audit-sheet/:numero_auditoria', async (req, res) => {
   }
 });
 
-router.delete('/deleted/id/:id', async (req, res) => {
+router.delete('/deleted/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const result = await deleteAuditSheetById(id);

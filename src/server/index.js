@@ -28,7 +28,7 @@ app.use('/details', detailsRoutes);
 app.use('/warning', warningRoutes);
 app.use('/pdf', pdfRoutes);
 app.use('/email', emailRoutes);
-app.use('./audit', auditSheet)
+app.use('/audit', auditSheet)
 
 
 

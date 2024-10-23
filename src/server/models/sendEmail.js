@@ -7,7 +7,7 @@ const sendEmail = async (toEmail, subject, text) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: toEmail || 'bbpmauditorias@gmail.com',
-    subject: subject || 'BPM AUDITORIAS',
+    subject: subject || 'CBPFOOD AUDITORIA',
     text: text || 'Detalles de la desviación no proporcionados.'
   };
 

@@ -6,7 +6,7 @@ const sendEmail = async (toEmail, subject, text) => {
   // Configuramos las opciones de correo
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: toEmail || 'bbpmauditorias@gmail.com',
+    to: toEmail || 'fungilydev@gmail.com',
     subject: subject || 'CBPFOOD AUDITORIA',
     text: text || 'Detalles de la desviación no proporcionados.'
   };

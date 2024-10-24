@@ -303,7 +303,9 @@ const updateDesviacion = async (id, desviacionData) => {
       - Estado: ${safeValues.estado}
       - Contacto con Clientes: ${safeValues.contactoClientes}
       
-      Por favor, revisa el sistema para más detalles.`,
+      Para ver más detalles, haz clic en el siguiente enlace:
+        <a href="https://frontend-svc7.onrender.com/" target="_blank">Ver detalles de la auditoría</a>
+      `,
     };
 
     await transporter.sendMail(mailOptions);

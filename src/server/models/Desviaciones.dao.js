@@ -82,7 +82,7 @@ const createDesviacion = async (desviacionesData) => {
   const formatDate = (dateString) => {
     if (!dateString) return moment().format('YYYY-MM-DD');
     const formattedDate = moment(dateString, ['D/M/YYYY', 'YYYY-MM-DD'], true);
-    return formattedDate.isValid() ? formattedDate.format('YYYY-MM-DD') : null;
+    return formattedDate.isValid() ? formattedDate.format('YYYY-MM-DD') : moment().format('YYYY-MM-DD');
   };
 
   const handleEmptyField = (field) => (field ? field : 'N/A');

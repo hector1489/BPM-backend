@@ -80,7 +80,7 @@ const createDesviacion = async (desviacionesData) => {
   const desviacionesArray = Array.isArray(desviacionesData) ? desviacionesData : [desviacionesData];
 
   const formatDate = (dateString) => {
-    if (!dateString) return null;
+    if (!dateString) return moment().format('YYYY-MM-DD');
     const formattedDate = moment(dateString, ['D/M/YYYY', 'YYYY-MM-DD'], true);
     return formattedDate.isValid() ? formattedDate.format('YYYY-MM-DD') : null;
   };

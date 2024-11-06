@@ -283,35 +283,6 @@ const updateDesviacion = async (id, desviacionData) => {
       ]
     );
 
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: safeValues.correo.trim() !== '' ? safeValues.correo : 'fungilydev@gmail.com',
-      subject: 'Actualización de Desviación - BPM AUDITORIAS',
-      text: `La desviación con el número de requerimiento: ${safeValues.numeroRequerimiento} ha sido actualizada.
-      
-      USUARIO: ${safeValues.auditor}
-
-      Nuevos detalles de la desviación:
-      - Preguntas Auditadas: ${safeValues.preguntasAuditadas}
-      - Desviación o Criterio: ${safeValues.desviacionOCriterio}
-      - Tipo de Acción: ${safeValues.tipoDeAccion}
-      - Responsable del Problema: ${safeValues.responsableProblema}
-      - Local: ${safeValues.local}
-      - Criticidad: ${safeValues.criticidad}
-      - Fecha de Recepción: ${safeValues.fechaRecepcion}
-      - Fecha de Solución Programada: ${safeValues.fechaSolucion}
-      - Estado: ${safeValues.estado}
-      - Contacto con Clientes: ${safeValues.contactoClientes}
-      
-      Para ver más detalles, haz clic en el siguiente enlace:
-        <a href="https://frontend-svc7.onrender.com/" target="_blank">Ver detalles de la auditoría</a>
-      `,
-    };
-
-    await transporter.sendMail(mailOptions);
-    console.log('Correo de actualización enviado exitosamente.');
-
-
 
   } catch (error) {
     console.error('Error al actualizar la desviación:', error.message, 'Datos:', safeValues);

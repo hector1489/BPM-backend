@@ -521,7 +521,7 @@
     ]
   },
   {
-    "questio": "ELB 58. Orden, limpieza y T° correcta en todos los equipos de frío. Termómetro interno",
+    "question": "ELB 58. Orden, limpieza y T° correcta en todos los equipos de frío. Termómetro interno",
     "action": [
       "CONTAR CON TERMOGRAFOS EN CADA EQUIPO DE FRIO",
       "REALIZAR REGISTRO DE CONTROL DE T° CON CIERTA FRECUENCIA",
